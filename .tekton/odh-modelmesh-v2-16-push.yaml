@@ -33,7 +33,7 @@ spec:
   - name: build-config-revision
     value: 'rhoai-2.16'
   - name: build-config-path
-    value: 'odh-pig-builds/build-config.yaml'
+    value: 'config/modelmesh-pig-build-config.yaml'
   - name: pnc-cli-config-git-url
     value: 'https://gitlab.cee.redhat.com/project-ncl/utils.git'
   - name: pnc-cli-config-revision
