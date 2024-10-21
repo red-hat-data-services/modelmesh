@@ -302,8 +302,8 @@ spec:
               set -e
 
               echo -e "\n=== Build config ==="
-              cat /workspace/output/build-config/$(params.build-config-path)
-              cp /workspace/output/build-config/$(params.build-config-path) /workspace/output
+              cat /workspace/output/modelmesh-pig-build-config/$(params.build-config-path)
+              cp /workspace/output/modelmesh-pig-build-config/$(params.build-config-path) /workspace/output
               echo -e "===================="
 
               echo -e "\nReplacing credentials in the CLI config ..."
