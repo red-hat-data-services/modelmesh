@@ -371,6 +371,7 @@ spec:
         value: $(tasks.clone-repository.results.commit)
       - name: BUILD_ARGS
         value:
+        - PNC_FILES_JSON=$(tasks.pnc-cli-build.results.pnc-file-list)
         - $(params.build-args[*])
       - name: BUILD_ARGS_FILE
         value: $(params.build-args-file)
