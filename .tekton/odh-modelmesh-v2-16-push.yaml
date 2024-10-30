@@ -356,26 +356,26 @@ spec:
             set -e
 
             echo -e "\n=== Build config ==="
-            cat /workspace/output/build-config/$(params.build-config-path)
-            cp /workspace/output/build-config/$(params.build-config-path) /var/workdir/source
+            cat /var/workdir/source/$(params.build-config-path)  # Updated path
+            cp /var/workdir/source/$(params.build-config-path) /var/workdir/source  # Ensure correct copying
             echo -e "===================="
 
-            echo -e "\nReplacing credentials in the CLI config ..."
-            envsubst '${SSO_SERVICE_ACCOUNT_NAME} ${SSO_SERVICE_ACCOUNT_CLIENT_SECRET}' < /workspace/output/cli-config/konflux/configs/pnc_cli/config.yaml > /workspace/output/config.yaml
+             echo -e "\nReplacing credentials in the CLI config ..."
+             envsubst '${SSO_SERVICE_ACCOUNT_NAME} ${SSO_SERVICE_ACCOUNT_CLIENT_SECRET}' < /var/workdir/source/cli-config/konflux/configs/pnc_cli/config.yaml > /var/workdir/source/config.yaml
 
             echo -e "\nStarting the PNC build ..."
-            PNC_CLI_OUTPUT_FILE="/workspace/output/pnc-cli-run-output.json"
-            java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 /workspace/output -p /workspace/output --profile ${PNC_PROFILE} --jsonOutput > $PNC_CLI_OUTPUT_FILE
-
+            PNC_CLI_OUTPUT_FILE="/var/workdir/source/pnc-cli-run-output.json"
+            java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 /var/workdir/source -p /var/workdir/source --profile ${PNC_PROFILE} --jsonOutput > $PNC_CLI_OUTPUT_FILE
+    
             echo -e "\nFinished the PNC build!"
             echo -e "\n=== PNC build output ==="
             cat $PNC_CLI_OUTPUT_FILE
             echo -e "===================="
-
+    
             echo -e "\nGetting the list of built files (to be used later in the container build) ..."
             jq '[.builds[].builtArtifacts[]?.downloadUrl ]' "$PNC_CLI_OUTPUT_FILE" > "$(results.pnc-file-list.path)"
-
-            cat  $(results.pnc-file-list.path)
+    
+            cat $(results.pnc-file-list.path)
         volumes:
           - name: workdir
             emptyDir: {}
