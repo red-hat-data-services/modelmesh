@@ -309,6 +309,9 @@ spec:
         workspace: git-auth
 
     - name: pnc-cli-build
+      params:
+        - name: SOURCE_ARTIFACT
+          value: $(tasks.clone-pnc-cli-config-repository.results.SOURCE_ARTIFACT)
       runAfter:
       - clone-pnc-cli-config-repository
       taskSpec:
