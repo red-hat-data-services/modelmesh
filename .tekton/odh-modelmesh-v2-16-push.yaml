@@ -309,13 +309,29 @@ spec:
         workspace: git-auth
 
     - name: pnc-cli-build
+      params:
+        - name: SOURCE_ARTIFACT
+          value: $(tasks.clone-repository-oci-ta.results.SOURCE_ARTIFACT)
       runAfter:
       - clone-pnc-cli-config-repository
       taskSpec:
+        params:
+          - description: The Trusted Artifact URI pointing to the artifact with the application source code.
+            name: SOURCE_ARTIFACT
+            type: string
+        stepTemplate:
+          volumeMounts:
+            - mountPath: /var/workdir
+              name: workdir
         results:
         - description: The file containing the list of pnc built artifacts to be later installed inside the container build
           name: pnc-file-list
         steps:
+        - name: use-trusted-artifact
+          image: quay.io/redhat-appstudio/build-trusted-artifacts:latest@sha256:8391272c4e5011120e9e7fee2c1f339e9405366110bf239dadcbc21e953ce099
+          args:
+            - use
+            - $(params.SOURCE_ARTIFACT)=/var/workdir/source
         - name: run-pnc-build
           image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli:48a761b5093bc474850b2ebcf06641825940deb7
           env:
@@ -341,7 +357,7 @@ spec:
 
             echo -e "\n=== Build config ==="
             cat /workspace/output/build-config/$(params.build-config-path)
-            cp /workspace/output/build-config/$(params.build-config-path) /workspace/output
+            cp /workspace/output/build-config/$(params.build-config-path) /var/workdir/source
             echo -e "===================="
 
             echo -e "\nReplacing credentials in the CLI config ..."
@@ -361,9 +377,9 @@ spec:
 
             cat  $(results.pnc-file-list.path)
 
-      workspaces:
-      - name: output
-        workspace: workspace
+      volumes:
+        - name: workdir
+          emptyDir: {}
     - name: prefetch-dependencies
       params:
       - name: input
