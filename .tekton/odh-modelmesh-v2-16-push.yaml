@@ -376,10 +376,9 @@ spec:
             jq '[.builds[].builtArtifacts[]?.downloadUrl ]' "$PNC_CLI_OUTPUT_FILE" > "$(results.pnc-file-list.path)"
 
             cat  $(results.pnc-file-list.path)
-
-      volumes:
-        - name: workdir
-          emptyDir: {}
+        volumes:
+          - name: workdir
+            emptyDir: {}
     - name: prefetch-dependencies
       params:
       - name: input
