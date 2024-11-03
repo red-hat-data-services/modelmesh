@@ -380,10 +380,10 @@ spec:
               
               cat $(results.pnc-file-list.path)
     
-        volumes:
-          # New volume to store a copy of the source code accessible only to this Task.
-          - name: workdir
-            emptyDir: {}
+          volumes:
+            # New volume to store a copy of the source code accessible only to this Task.
+            - name: workdir
+              emptyDir: {}
 
     - name: prefetch-dependencies
       params:
