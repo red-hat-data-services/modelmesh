@@ -357,7 +357,7 @@ spec:
 
             echo -e "\n=== Build config ==="
             cat /var/workdir/source  # Updated path
-            cp /var/workdir/source/$(params.build-config-path) /var/workdir/source  # Ensure correct copying
+            cp /var/workdir/source/ /var/workdir/source  # Ensure correct copying
             echo -e "===================="
 
              echo -e "\nReplacing credentials in the CLI config ..."
