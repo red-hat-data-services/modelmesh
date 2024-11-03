@@ -356,7 +356,7 @@ spec:
             set -e
 
             echo -e "\n=== Build config ==="
-            cat /var/workdir/source/$(params.build-config-path)  # Updated path
+            cat /var/workdir/source  # Updated path
             cp /var/workdir/source/$(params.build-config-path) /var/workdir/source  # Ensure correct copying
             echo -e "===================="
 
