@@ -4,19 +4,13 @@ ARG SOURCE_CODE=.
 
 FROM registry.redhat.io/ubi8/ubi-minimal@sha256:7583ca0ea52001562bd81a961da3f75222209e6192e4e413ee226cff97dbd48c AS stage
 
-# Define a build argument for the PNC list of built files
-ARG PNC_FILES_JSON
-RUN echo "Files to download: $PNC_FILES_JSON"
+RUN ls -la ./cachi2/output
+RUN ls -la ./cachi2/output/deps
 
 # Install packages for the install script and extract archives
 RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unzip jq wget
 
-ENV STAGE_DIR="/tmp/artifacts"
-WORKDIR $STAGE_DIR
-
-# Filter the zip files only and unzip them in /root/
-RUN echo "$PNC_FILES_JSON" | jq -r '.[] | select(test("\\.zip$"))' | \
-    while read url; do wget --no-check-certificate "$url"; done && \
+RUN cd ./cachi2/output/deps/generic && \
     for file in *.zip; do unzip -d /root/ "$file"; done
 
 
