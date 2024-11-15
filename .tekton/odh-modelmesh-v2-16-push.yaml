@@ -292,10 +292,6 @@ spec:
         value: $(params.build-config-git-url)
       - name: revision
         value: $(params.build-config-revision)
-      - name: CHAINS-GIT_URL
-        value: $(params.build-config-git-url)
-      - name: CHAINS-GIT_COMMIT
-        value: $(params.build-config-revision)
       - name: subdirectory
         value: build-config
       - name: sslVerify
@@ -320,10 +316,6 @@ spec:
       - name: url
         value: $(params.pnc-cli-config-git-url)
       - name: revision
-        value: $(params.pnc-cli-config-revision)
-      - name: CHAINS-GIT_URL
-        value: $(params.pnc-cli-config-git-url)
-      - name: CHAINS-GIT_COMMIT
         value: $(params.pnc-cli-config-revision)
       - name: subdirectory
         value: cli-config
