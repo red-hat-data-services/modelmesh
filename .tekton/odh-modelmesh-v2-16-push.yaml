@@ -31,18 +31,6 @@ spec:
     value: Dockerfile.konflux
   - name: path-context
     value: .
-  - name: build-config-git-url
-    value: 'https://github.com/red-hat-data-services/RHOAI-Build-Config.git'
-  - name: build-config-revision
-    value: 'rhoai-2.16'
-  - name: build-config-path
-    value: 'odh-pig-builds/build-config.yaml'
-  - name: pnc-cli-config-git-url
-    value: 'https://gitlab.cee.redhat.com/project-ncl/utils.git'
-  - name: pnc-cli-config-revision
-    value: 'master'
-  - name: pnc-profile
-    value: 'prod'
   - name: prefetch-input
     value: [{"path": ".", "type": "rpm"}, {"path": ".", "type": "generic"}]
   pipelineSpec:
@@ -110,27 +98,6 @@ spec:
         values:
         - "Failed"
     params:
-    - name: build-config-git-url
-      description: Source Repository URL containing the build configuration
-      type: string
-    - name: build-config-revision
-      default: ""
-      description: Revision of the Source Repository containing the build configuration
-      type: string
-    - name: build-config-path
-      default: "build-config.yaml"
-      description: Full path of the build configuration file
-      type: string
-    - description: Source Repository URL containing the PNC CLI configuration
-      name: pnc-cli-config-git-url
-      type: string
-    - default: ""
-      description: Revision of the Source Repository containing the PNC CLI configuration
-      name: pnc-cli-config-revision
-      type: string
-    - name: pnc-profile
-      value: 'prod'
-    
     - description: Source Repository URL
       name: git-url
       type: string
@@ -286,116 +253,7 @@ spec:
         workspace: workspace
       - name: basic-auth
         workspace: git-auth
-    - name: clone-build-config-repository
-      params:
-      - name: url
-        value: $(params.build-config-git-url)
-      - name: revision
-        value: $(params.build-config-revision)
-      - name: subdirectory
-        value: build-config
-      - name: sslVerify
-        value: false
-      taskRef:
-        params:
-        - name: name
-          value: git-clone
-        - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-git-clone:0.1@sha256:0bb1be8363557e8e07ec34a3c5daaaaa23c9d533f0bb12f00dc604d00de50814
-        - name: kind
-          value: task
-        resolver: bundles
-      workspaces:
-      - name: output
-        workspace: workspace
-      - name: basic-auth
-        workspace: git-auth
-
-    - name: clone-pnc-cli-config-repository
-      params:
-      - name: url
-        value: $(params.pnc-cli-config-git-url)
-      - name: revision
-        value: $(params.pnc-cli-config-revision)
-      - name: subdirectory
-        value: cli-config
-      - name: sslVerify
-        value: false
-      runAfter:
-      - clone-build-config-repository
-      taskRef:
-        params:
-        - name: name
-          value: git-clone
-        - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-git-clone:0.1@sha256:0bb1be8363557e8e07ec34a3c5daaaaa23c9d533f0bb12f00dc604d00de50814
-        - name: kind
-          value: task
-        resolver: bundles
-      workspaces:
-      - name: output
-        workspace: workspace
-      - name: basic-auth
-        workspace: git-auth
-
-    - name: pnc-cli-build
-      runAfter:
-        - clone-pnc-cli-config-repository
-      taskSpec:
-        results:
-          - description: The file containing the list of pnc built artifacts to be later installed inside the container build
-            name: pnc-file-list
-        steps:
-          - name: run-pnc-build
-            image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli@sha256:00f29bb186e3afedbffeb57942038f7d9ad747640e0a4ae2c53c573a8cdece74
-            env:
-              - name: SSO_SERVICE_ACCOUNT_NAME
-                valueFrom:
-                  secretKeyRef:
-                    name: pnc-secret
-                    key: svc.account.username
-              - name: SSO_SERVICE_ACCOUNT_CLIENT_SECRET
-                valueFrom:
-                  secretKeyRef:
-                    name: pnc-secret
-                    key: svc.account.password
-              - name: PNC_PROFILE
-                valueFrom:
-                  secretKeyRef:
-                    name: pnc-secret
-                    key: pnc.profile
-              
-            script: |
-              #!/bin/bash
-              set -e
-
-              echo -e "\n=== Build config ==="
-              cat /workspace/source/build-config/$(params.build-config-path)
-              cp /workspace/source/build-config/$(params.build-config-path) /workspace/source
-              echo -e "===================="
-
-              echo -e "\nReplacing credentials in the CLI config ..."
-              envsubst '${SSO_SERVICE_ACCOUNT_NAME} ${SSO_SERVICE_ACCOUNT_CLIENT_SECRET}' < /workspace/source/cli-config/konflux/configs/pnc_cli/config.yaml > /workspace/source/config.yaml
-
-              echo -e "\nStarting the PNC build ..."
-              PNC_CLI_OUTPUT_FILE="/workspace/source/pnc-cli-run-output.json"
-              java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 /workspace/source -p /workspace/source --profile ${PNC_PROFILE} --jsonOutput > $PNC_CLI_OUTPUT_FILE
-
-              echo -e "\nFinished the PNC build!"
-              echo -e "\n=== PNC build output ==="
-              cat $PNC_CLI_OUTPUT_FILE
-              echo -e "===================="
-
-              echo -e "\nGetting the list of built files (to be used later in the container build) ..."
-              jq '[.builds[].builtArtifacts[]?.downloadUrl ]' "$PNC_CLI_OUTPUT_FILE" > "$(results.pnc-file-list.path)"
-
-              jq '{metadata: {version: "1.0"}, artifacts: [.builds[].builtArtifacts[]? | select(.downloadUrl | endswith(".zip")) | {download_url: .downloadUrl , checksums: {sha256: .sha256}}] }' $PNC_CLI_OUTPUT_FILE | yq -p json > "$(workspaces.source.path)/source/generic_lockfile.yaml"
-              
-              cat  $(results.pnc-file-list.path)
-
-      workspaces:
-      - name: source
-        workspace: workspace
+    
     - name: prefetch-dependencies
       params:
       - name: input
@@ -403,7 +261,7 @@ spec:
       - name: dev-package-managers
         value: "true"
       runAfter:
-      - pnc-cli-build
+      - clone-repository
       taskRef:
         params:
         - name: name
@@ -443,7 +301,6 @@ spec:
         value: $(tasks.clone-repository.results.commit)
       - name: BUILD_ARGS
         value:
-        - PNC_FILES_JSON=$(tasks.pnc-cli-build.results.pnc-file-list)
         - $(params.build-args[*])
       - name: BUILD_ARGS_FILE
         value: $(params.build-args-file)
