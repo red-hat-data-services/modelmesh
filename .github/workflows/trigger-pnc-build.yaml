@@ -1,0 +1,180 @@
+name: Trigger PNC Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'rhoai-2.1[6-9]+'
+    paths-ignore:
+      - .tekton/**
+      - .github/**
+
+env:
+  GITHUB_ORG: rhoai-rhtap
+  SSO_SERVICE_ACCOUNT_NAME: ${{ secrets.SSO_SERVICE_ACCOUNT_NAME }}
+  SSO_SERVICE_ACCOUNT_CLIENT_SECRET: ${{ secrets.SSO_SERVICE_ACCOUNT_CLIENT_SECRET }}
+  PNC_PROFILE: ${{ secrets.PNC_PROFILE }}
+  PNC_CLI_CONFIG_GIT_URL: https://gitlab.cee.redhat.com/project-ncl/utils.git
+  PNC_CLI_CONFIG_REVISION: master
+
+permissions:
+  contents: write
+
+jobs:
+  run-pnc-build:
+    if: ${{ github.ref_name != 'main' }}
+    runs-on:
+      - self-hosted
+      - pnc
+    container:
+      image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli:48a761b5093bc474850b2ebcf06641825940deb7
+      options: --user root
+    steps:
+      - name: Get Current branch name
+        id: get_branch
+        shell: bash
+        run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      - name: Init
+        id: init
+        run: |
+          abs_cwd=$(pwd)
+          work_dir=pnc-$(date +%s)
+          mkdir $work_dir
+          cd $work_dir
+          SLACK_MESSAGE=":alert:${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }} PNC build failed. \n Please check the logs at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          echo "work_dir=$work_dir" >> $GITHUB_OUTPUT
+          echo "abs_cwd=$abs_cwd" >> $GITHUB_OUTPUT
+          {
+            echo "SLACK_MESSAGE<<EOF"
+            echo -e "${SLACK_MESSAGE}"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
+      - name: Install prerequisites
+        id: install-prerequisites
+        run: |
+          cd ${{ steps.init.outputs.work_dir }}
+          os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+          arch="$(uname -m | sed 's/x86_64/amd64/')"
+          yq_version="v4.44.3"
+          yq_filename="yq-$yq_version"
+          echo "-> Downloading yq" >&2
+          curl -sSfLo "$yq_filename" "https://github.com/mikefarah/yq/releases/download/$yq_version/yq_${os}_${arch}"
+          chmod +x $yq_filename
+          ln -s $yq_filename yq
+          cp $yq_filename /usr/local/bin/yq
+          
+          microdnf install -y git
+      - name: Checkout build config
+        id: checkout-build-config
+        run: |
+          checkout_dir=${{ steps.init.outputs.work_dir }}/RBC-${{ steps.get_branch.outputs.branch }}
+          rhoai_version=${{ steps.get_branch.outputs.branch }}
+          mkdir -p $checkout_dir
+          cd $checkout_dir
+          git config --global init.defaultBranch ${rhoai_version}
+          git init -q
+          git remote add origin https://github.com/${{ env.GITHUB_ORG }}/RHOAI-Build-Config
+          git config core.sparseCheckout true
+          git config core.sparseCheckoutCone false
+          echo "config/${{ vars.COMPONENT }}-pig-build-config.yaml" >> .git/info/sparse-checkout
+          git fetch -q --depth=1 origin ${rhoai_version}
+          git checkout -q ${rhoai_version}
+          BUILD_CONFIG_PATH=${checkout_dir}/config/${{ vars.COMPONENT }}-pig-build-config.yaml
+          echo "BUILD_CONFIG_PATH=${BUILD_CONFIG_PATH}" >> $GITHUB_OUTPUT
+
+
+
+      - name: Checkout PNC cli config
+        id: checkout-pnc-cli-config
+        run: |
+          checkout_dir=${{ steps.init.outputs.work_dir }}/cli-config
+          mkdir -p $checkout_dir
+          cd $checkout_dir
+          git config --global http.sslVerify false
+          git config --global init.defaultBranch ${PNC_CLI_CONFIG_REVISION}
+          git init -q
+          git remote add origin ${PNC_CLI_CONFIG_GIT_URL}
+          git config core.sparseCheckout true
+          git config core.sparseCheckoutCone false
+          echo "konflux/configs/pnc_cli/config.yaml" >> .git/info/sparse-checkout
+          git fetch -q --depth=1 origin ${PNC_CLI_CONFIG_REVISION}
+          git checkout -q ${PNC_CLI_CONFIG_REVISION}
+          PNC_CLI_BUILD_CONFIG_PATH=${checkout_dir}/konflux/configs/pnc_cli/config.yaml
+          echo "PNC_CLI_BUILD_CONFIG_PATH=${PNC_CLI_BUILD_CONFIG_PATH}" >> $GITHUB_OUTPUT
+
+      - name: Run PNC Build
+        id: run-pnc-build
+        run: |
+          BUILD_CONFIG_URL=rhoai-rhtap/RHOAI-Build-Config
+          BUILD_CONFIG_REVISION=${{ steps.get_branch.outputs.branch }}
+          BUILD_CONFIG_PATH=odh-pig-builds/build-config.yaml
+          work_dir=${{ steps.init.outputs.work_dir }}
+          echo -e "===================="
+
+          echo -e "\nChecking and copying the build config ..."
+          BUILD_CONFIG_PATH=${{ steps.checkout-build-config.outputs.BUILD_CONFIG_PATH }}
+          ls -l ${BUILD_CONFIG_PATH}
+          cp ${BUILD_CONFIG_PATH} ${work_dir}/build-config.yaml
+          ls -l
+
+          echo -e "\nChecking the PNC cli config ..."
+          ls -l ${{ steps.checkout-pnc-cli-config.outputs.PNC_CLI_BUILD_CONFIG_PATH }}
+
+          echo -e "\nReplacing credentials in the CLI config ..."
+          envsubst '${SSO_SERVICE_ACCOUNT_NAME} ${SSO_SERVICE_ACCOUNT_CLIENT_SECRET}' < ${{ steps.checkout-pnc-cli-config.outputs.PNC_CLI_BUILD_CONFIG_PATH }} > ${work_dir}/config.yaml
+          ls -l
+
+          echo -e "\nStarting the PNC build ..."
+          PNC_CLI_OUTPUT_FILE="pnc-cli-run-output.json"
+          java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 ${work_dir} -p ${work_dir} --profile ${PNC_PROFILE} --jsonOutput > ${work_dir}/$PNC_CLI_OUTPUT_FILE
+
+          echo -e "\nFinished the PNC build!"
+          echo -e "\n=== PNC build output ==="
+          cat ${work_dir}/$PNC_CLI_OUTPUT_FILE
+          echo -e "===================="
+
+          echo -e "\nGetting the list of built files (to be used later in the container build) ..."
+          jq '[.builds[].builtArtifacts[]?.downloadUrl ]' "${work_dir}/$PNC_CLI_OUTPUT_FILE" > "${work_dir}/pnc-file-list.json"
+          cat ${work_dir}/pnc-file-list.json
+
+          
+          jq '{metadata: {version: "1.0"}, artifacts: [.builds[].builtArtifacts[]? | select(.downloadUrl | endswith(".zip")) | {download_url: .downloadUrl , checksum: ("sha256:" + .sha256)}] }' ${work_dir}/$PNC_CLI_OUTPUT_FILE | yq -p json > "${work_dir}/artifacts.lock.yaml"
+          cat ${work_dir}/artifacts.lock.yaml
+          ls -l ${work_dir}/
+          echo "LOCK_FILE_PATH=${work_dir}/artifacts.lock.yaml" >> $GITHUB_OUTPUT
+      - name: Git checkout component repo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.get_branch.outputs.branch }}
+          path: ${{ steps.init.outputs.work_dir }}/${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }}
+
+      - name: Update Lock File
+        run: |
+          COMPONENT_CHECKOUT_PATH=${{ steps.init.outputs.work_dir }}/${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }}
+          LOCK_FILE_PATH=${{ steps.run-pnc-build.outputs.LOCK_FILE_PATH }}
+          cp ${LOCK_FILE_PATH} ${COMPONENT_CHECKOUT_PATH}/
+
+      - name: Commit and push the changes to release branch
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ steps.get_branch.outputs.branch }}
+          message: "Updating the artifacts from the latest PNC build"
+          directory: ${{ steps.init.outputs.work_dir }}/${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }}
+          author_name: Openshift-AI DevOps
+          author_email: openshift-ai-devops@redhat.com
+
+      - name: Send Slack Notification
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_MESSAGE: '${{ steps.init.outputs.SLACK_MESSAGE }}'
+          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTIFICATIONS_WEBHOOK }}
+          MSG_MINIMAL: true
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_FOOTER: ''
+      - name: Cleanup workspace
+        if: always()
+        run: |
+          rm -rf ${{ steps.init.outputs.work_dir }}
