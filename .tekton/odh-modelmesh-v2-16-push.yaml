@@ -10,7 +10,8 @@ metadata:
     build.appstudio.openshift.io/build-nudge-files: "build/operator-nudging.yaml"
     pipelinesascode.tekton.dev/on-cel-expression: |
       event == "push" 
-      && target_branch == "rhoai-2.16" && "artifacts.lock.yaml".pathChanged()
+      && target_branch == "rhoai-2.16"
+      && ( !".tekton/**".pathChanged() || ".tekton/odh-modelmesh-v2-16-push.yaml".pathChanged() )
   creationTimestamp: null
   labels:
     appstudio.openshift.io/application: rhoai-v2-16
@@ -30,6 +31,18 @@ spec:
     value: Dockerfile.konflux
   - name: path-context
     value: .
+  - name: build-config-git-url
+    value: 'https://github.com/red-hat-data-services/RHOAI-Build-Config.git'
+  - name: build-config-revision
+    value: 'rhoai-2.16'
+  - name: build-config-path
+    value: 'odh-pig-builds/build-config.yaml'
+  - name: pnc-cli-config-git-url
+    value: 'https://gitlab.cee.redhat.com/project-ncl/utils.git'
+  - name: pnc-cli-config-revision
+    value: 'master'
+  - name: pnc-profile
+    value: 'prod'
   - name: prefetch-input
     value: [{"path": ".", "type": "rpm"}, {"path": ".", "type": "generic"}]
   pipelineSpec:
@@ -48,7 +61,7 @@ spec:
         - name: name
           value: show-sbom
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-show-sbom:0.1@sha256:9bfc6b99ef038800fe131d7b45ff3cd4da3a415dd536f7c657b3527b01c4a13b
+          value: quay.io/konflux-ci/tekton-catalog/task-show-sbom:0.1@sha256:945a7c9066d3e0a95d3fddb7e8a6992e4d632a2a75d8f3a9bd2ff2fef0ec9aa0
         - name: kind
           value: task
         resolver: bundles
@@ -67,7 +80,7 @@ spec:
         - name: name
           value: summary
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-summary:0.2@sha256:d97c04ab42f277b1103eb6f3a053b247849f4f5b3237ea302a8ecada3b24e15b
+          value: quay.io/konflux-ci/tekton-catalog/task-summary:0.2@sha256:870d9a04d9784840a90b7bf6817cd0d0c4edfcda04b1ba1868cae625a3c3bfcc
         - name: kind
           value: task
         resolver: bundles
@@ -81,13 +94,13 @@ spec:
       - name: secret-name
         value: rhoai-konflux-secret
       - name: key-name
-        value: slack-poc-webhook
+        value: slack-webhook
       taskRef:
         params:
         - name: name
           value: slack-webhook-notification
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-slack-webhook-notification:0.1@sha256:0dfdfd87a8716ff9c20ae3325eff9a5d52ee9c708959c1e93eaedc852621a4d5
+          value: quay.io/konflux-ci/tekton-catalog/task-slack-webhook-notification:0.1@sha256:dc17b70633363d78414b8c06dc1660d25742935f106a6116995638e1210c2730
         - name: kind
           value: task
         resolver: bundles
@@ -97,6 +110,27 @@ spec:
         values:
         - "Failed"
     params:
+    - name: build-config-git-url
+      description: Source Repository URL containing the build configuration
+      type: string
+    - name: build-config-revision
+      default: ""
+      description: Revision of the Source Repository containing the build configuration
+      type: string
+    - name: build-config-path
+      default: "build-config.yaml"
+      description: Full path of the build configuration file
+      type: string
+    - description: Source Repository URL containing the PNC CLI configuration
+      name: pnc-cli-config-git-url
+      type: string
+    - default: ""
+      description: Revision of the Source Repository containing the PNC CLI configuration
+      name: pnc-cli-config-revision
+      type: string
+    - name: pnc-profile
+      value: 'prod'
+
     - description: Source Repository URL
       name: git-url
       type: string
@@ -137,7 +171,7 @@ spec:
       description: Image tag expiration time, time values could be something like
         1h, 2d, 3w for hours, days, and weeks, respectively.
       name: image-expires-after
-    - default: "false"
+    - default: "true"
       description: Build a source image.
       name: build-source-image
       type: string
@@ -183,7 +217,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: rhoai-konflux-secret
-                key: slack-component-failure-poc-notification
+                key: slack-component-failure-notification
           script: |
             pipelinerun_name=$(params.pipelinerun-name)
             target_branch={{target_branch}}
@@ -219,7 +253,7 @@ spec:
         - name: name
           value: init
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-init:0.2@sha256:092c113b614f6551113f17605ae9cb7e822aa704d07f0e37ed209da23ce392cc
+          value: quay.io/konflux-ci/tekton-catalog/task-init:0.2@sha256:0523b51c28375a3f222da91690e22eff11888ebc98a0c73c468af44762265c69
         - name: kind
           value: task
         resolver: bundles
@@ -238,7 +272,7 @@ spec:
         - name: name
           value: git-clone
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-git-clone:0.1@sha256:2cccdf8729ad4d5adf65e8b66464f8efa1e1c87ba16d343b4a6c621a2a40f7e1
+          value: quay.io/konflux-ci/tekton-catalog/task-git-clone:0.1@sha256:d091a9e19567a4cbdc5acd57903c71ba71dc51d749a4ba7477e689608851e981
         - name: kind
           value: task
         resolver: bundles
@@ -252,7 +286,124 @@ spec:
         workspace: workspace
       - name: basic-auth
         workspace: git-auth
+    - name: clone-build-config-repository
+      params:
+      - name: url
+        value: $(params.build-config-git-url)
+      - name: revision
+        value: $(params.build-config-revision)
+      - name: CHAINS-GIT_URL
+        value: $(params.build-config-git-url)
+      - name: CHAINS-GIT_COMMIT
+        value: $(params.build-config-revision)
+      - name: subdirectory
+        value: build-config
+      - name: sslVerify
+        value: false
+      taskRef:
+        params:
+        - name: name
+          value: git-clone
+        - name: bundle
+          value: quay.io/konflux-ci/tekton-catalog/task-git-clone:0.1@sha256:d091a9e19567a4cbdc5acd57903c71ba71dc51d749a4ba7477e689608851e981
+        - name: kind
+          value: task
+        resolver: bundles
+      workspaces:
+      - name: output
+        workspace: workspace
+      - name: basic-auth
+        workspace: git-auth
 
+    - name: clone-pnc-cli-config-repository
+      params:
+      - name: url
+        value: $(params.pnc-cli-config-git-url)
+      - name: revision
+        value: $(params.pnc-cli-config-revision)
+      - name: CHAINS-GIT_URL
+        value: $(params.pnc-cli-config-git-url)
+      - name: CHAINS-GIT_COMMIT
+        value: $(params.pnc-cli-config-revision)
+      - name: subdirectory
+        value: cli-config
+      - name: sslVerify
+        value: false
+      runAfter:
+      - clone-build-config-repository
+      taskRef:
+        params:
+        - name: name
+          value: git-clone
+        - name: bundle
+          value: quay.io/konflux-ci/tekton-catalog/task-git-clone:0.1@sha256:d091a9e19567a4cbdc5acd57903c71ba71dc51d749a4ba7477e689608851e981
+        - name: kind
+          value: task
+        resolver: bundles
+      workspaces:
+      - name: output
+        workspace: workspace
+      - name: basic-auth
+        workspace: git-auth
+
+    - name: pnc-cli-build
+      runAfter:
+        - clone-pnc-cli-config-repository
+      taskSpec:
+        results:
+          - description: The file containing the list of pnc built artifacts to be later installed inside the container build
+            name: pnc-file-list
+        steps:
+          - name: run-pnc-build
+            image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli@sha256:00f29bb186e3afedbffeb57942038f7d9ad747640e0a4ae2c53c573a8cdece74
+            env:
+              - name: SSO_SERVICE_ACCOUNT_NAME
+                valueFrom:
+                  secretKeyRef:
+                    name: pnc-secret
+                    key: svc.account.username
+              - name: SSO_SERVICE_ACCOUNT_CLIENT_SECRET
+                valueFrom:
+                  secretKeyRef:
+                    name: pnc-secret
+                    key: svc.account.password
+              - name: PNC_PROFILE
+                valueFrom:
+                  secretKeyRef:
+                    name: pnc-secret
+                    key: pnc.profile
+
+            script: |
+              #!/bin/bash
+              set -e
+
+              echo -e "\n=== Build config ==="
+              cat /workspace/source/build-config/$(params.build-config-path)
+              cp /workspace/source/build-config/$(params.build-config-path) /workspace/source
+              echo -e "===================="
+
+              echo -e "\nReplacing credentials in the CLI config ..."
+              envsubst '${SSO_SERVICE_ACCOUNT_NAME} ${SSO_SERVICE_ACCOUNT_CLIENT_SECRET}' < /workspace/source/cli-config/konflux/configs/pnc_cli/config.yaml > /workspace/source/config.yaml
+
+              echo -e "\nStarting the PNC build ..."
+              PNC_CLI_OUTPUT_FILE="/workspace/source/pnc-cli-run-output.json"
+              java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 /workspace/source -p /workspace/source --profile ${PNC_PROFILE} --jsonOutput > $PNC_CLI_OUTPUT_FILE
+
+              echo -e "\nFinished the PNC build!"
+              echo -e "\n=== PNC build output ==="
+              cat $PNC_CLI_OUTPUT_FILE
+              echo -e "===================="
+
+              echo -e "\nGetting the list of built files (to be used later in the container build) ..."
+              jq '[.builds[].builtArtifacts[]?.downloadUrl ]' "$PNC_CLI_OUTPUT_FILE" > "$(results.pnc-file-list.path)"
+
+              jq '{metadata: {version: "1.0"}, artifacts: [.builds[].builtArtifacts[]? | select(.downloadUrl | endswith(".zip")) | {download_url: .downloadUrl , checksums: {sha256: .sha256}}] }' $PNC_CLI_OUTPUT_FILE | yq -p json > "$(workspaces.source.path)/source/generic_lockfile.yaml"
+              
+              cat  $(results.pnc-file-list.path)
+
+      workspaces:
+      - name: source
+        workspace: workspace
     - name: prefetch-dependencies
       params:
       - name: input
@@ -260,7 +411,7 @@ spec:
       - name: dev-package-managers
         value: "true"
       runAfter:
-      - clone-repository
+      - pnc-cli-build
       taskRef:
         params:
         - name: name
@@ -300,6 +451,7 @@ spec:
         value: $(tasks.clone-repository.results.commit)
       - name: BUILD_ARGS
         value:
+        - PNC_FILES_JSON=$(tasks.pnc-cli-build.results.pnc-file-list)
         - $(params.build-args[*])
       - name: BUILD_ARGS_FILE
         value: $(params.build-args-file)
@@ -318,7 +470,7 @@ spec:
         - name: name
           value: buildah
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:67f0290a8ad9a147cd28bb06af182b3e4b2b3ef17070196d476d8e2ae4302ecf
+          value: quay.io/konflux-ci/tekton-catalog/task-buildah:0.2@sha256:7779f9e48eda44aebae3597747f5d8c1cc3fbc3a98c2251ee20929d868b575f1
         - name: kind
           value: task
         resolver: bundles
@@ -350,7 +502,7 @@ spec:
         - name: name
           value: build-image-index
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-build-image-index:0.1@sha256:327d745a58c1589b0ff196ed526d12a8a0a20ae22fd1c9dd1577b850a977dc3b
+          value: quay.io/konflux-ci/tekton-catalog/task-build-image-index:0.1@sha256:ebc17bb22481160eec6eb7277df1e48b90f599bebe563cd4f046807f4e32ced3
         - name: kind
           value: task
         resolver: bundles
@@ -370,7 +522,7 @@ spec:
         - name: name
           value: source-build
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-source-build:0.1@sha256:21cb5ebaff7a9216903cf78933dc4ec4dd6283a52636b16590a5f52ceb278269
+          value: quay.io/konflux-ci/tekton-catalog/task-source-build:0.1@sha256:ddfa1fb418c1d9d55d7d70d39fe8f35ce05e96073bcd057bb6aaacd1f839cc51
         - name: kind
           value: task
         resolver: bundles
@@ -399,7 +551,7 @@ spec:
         - name: name
           value: deprecated-image-check
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-deprecated-image-check:0.4@sha256:b4f9599f5770ea2e6e4d031224ccc932164c1ecde7f85f68e16e99c98d754003
+          value: quay.io/konflux-ci/tekton-catalog/task-deprecated-image-check:0.4@sha256:5a1a165fa02270f0a947d8a2131ee9d8be0b8e9d34123828c2bef589e504ee84
         - name: kind
           value: task
         resolver: bundles
@@ -421,7 +573,7 @@ spec:
         - name: name
           value: clair-scan
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-clair-scan:0.2@sha256:28fee4bf5da87f2388c973d9336086749cad8436003f9a514e22ac99735e056b
+          value: quay.io/konflux-ci/tekton-catalog/task-clair-scan:0.2@sha256:0a5421111e7092740398691d5bd7c125cc0896f29531d19414bb5724ae41692a
         - name: kind
           value: task
         resolver: bundles
@@ -441,7 +593,7 @@ spec:
         - name: name
           value: ecosystem-cert-preflight-checks
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-ecosystem-cert-preflight-checks:0.1@sha256:5131cce0f93d0b728c7bcc0d6cee4c61d4c9f67c6d619c627e41e3c9775b497d
+          value: quay.io/konflux-ci/tekton-catalog/task-ecosystem-cert-preflight-checks:0.1@sha256:df8a25a3431a70544172ed4844f9d0c6229d39130633960729f825a031a7dea9
         - name: kind
           value: task
         resolver: bundles
@@ -463,7 +615,7 @@ spec:
         - name: name
           value: sast-snyk-check
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-sast-snyk-check:0.2@sha256:c1ea706405f9ae146e31baef4abfea49b1e855a75bfc44c33eb0eb29516831b3
+          value: quay.io/konflux-ci/tekton-catalog/task-sast-snyk-check:0.2@sha256:3d62d7d9a55858903760c3b6288a64f777822f89226b4edbe8baaa1488222623
         - name: kind
           value: task
         resolver: bundles
@@ -488,7 +640,7 @@ spec:
         - name: name
           value: clamav-scan
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-clamav-scan:0.1@sha256:1e29eebe916b81b7100138d62db0e03e22d03657274d37041c59cbaca5fdbf7d
+          value: quay.io/konflux-ci/tekton-catalog/task-clamav-scan:0.1@sha256:b4f450f1447b166da671f1d5819ab5a1485083e5c27ab91f7d8b7a2ff994c8c2
         - name: kind
           value: task
         resolver: bundles
@@ -511,7 +663,7 @@ spec:
         - name: name
           value: apply-tags
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-apply-tags:0.1@sha256:f485e250fb060060892b633c495a3d7e38de1ec105ae1be48608b0401530ab2c
+          value: quay.io/konflux-ci/tekton-catalog/task-apply-tags:0.1@sha256:87fd7fc0e937aad1a8db9b6e377d7e444f53394dafde512d68adbea6966a4702
         - name: kind
           value: task
         resolver: bundles
@@ -532,7 +684,7 @@ spec:
         - name: name
           value: push-dockerfile
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-push-dockerfile:0.1@sha256:674e70f7d724aaf1dd631ba9be2998ab0305fb3e0d9ec361351cc5e57bcdd3ec
+          value: quay.io/konflux-ci/tekton-catalog/task-push-dockerfile:0.1@sha256:48bb2ee92ea528b28c0814c9cc126021e499a081b69431987a774561e9ac8047
         - name: kind
           value: task
         resolver: bundles
@@ -552,7 +704,7 @@ spec:
         - name: name
           value: rpms-signature-scan
         - name: bundle
-          value: quay.io/konflux-ci/tekton-catalog/task-rpms-signature-scan:0.2@sha256:7aa4d3c95e2b963e82fdda392f7cb3d61e3dab035416cf4a3a34e43cf3c9c9b8
+          value: quay.io/konflux-ci/tekton-catalog/task-rpms-signature-scan:0.2@sha256:28aaf87d61078a0aeeeabcae455eda7d05c4f9b81d8995bdcf3dde95c1a7a77b
         - name: kind
           value: task
         resolver: bundles
