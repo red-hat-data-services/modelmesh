@@ -2,12 +2,12 @@ name: Trigger PNC Build
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - 'rhoai-2.1[6-9]+'
-    paths-ignore:
-      - .tekton/**
-      - .github/**
+#  push:
+#    branches:
+#      - 'rhoai-2.1[6-9]+'
+#    paths-ignore:
+#      - .tekton/**
+#      - .github/**
 
 env:
   GITHUB_ORG: red-hat-data-services
