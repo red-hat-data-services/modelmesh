@@ -36,7 +36,7 @@ spec:
   - name: build-config-revision
     value: 'rhoai-2.16'
   - name: build-config-path
-    value: 'config/modelmesh-pig-build-config.yaml'
+    value: 'odh-pig-builds/build-config.yaml'
   - name: pnc-cli-config-git-url
     value: 'https://gitlab.cee.redhat.com/project-ncl/utils.git'
   - name: pnc-cli-config-revision
@@ -94,7 +94,7 @@ spec:
       - name: secret-name
         value: rhoai-konflux-secret
       - name: key-name
-        value: slack-webhook
+        value: slack-poc-webhook
       taskRef:
         params:
         - name: name
@@ -217,7 +217,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: rhoai-konflux-secret
-                key: slack-component-failure-notification
+                key: slack-component-failure-poc-notification
           script: |
             pipelinerun_name=$(params.pipelinerun-name)
             target_branch={{target_branch}}
