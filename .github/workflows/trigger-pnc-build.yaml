@@ -10,7 +10,7 @@ on:
       - .github/**
 
 env:
-  GITHUB_ORG: rhoai-rhtap
+  GITHUB_ORG: red-hat-data-services
   SSO_SERVICE_ACCOUNT_NAME: ${{ secrets.SSO_SERVICE_ACCOUNT_NAME }}
   SSO_SERVICE_ACCOUNT_CLIENT_SECRET: ${{ secrets.SSO_SERVICE_ACCOUNT_CLIENT_SECRET }}
   PNC_PROFILE: ${{ secrets.PNC_PROFILE }}
