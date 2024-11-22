@@ -41,7 +41,7 @@ jobs:
           work_dir=pnc-$(date +%s)
           mkdir $work_dir
           cd $work_dir
-          SLACK_MESSAGE=":alert:${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }} PNC build failed. \n Please check the logs at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          SLACK_MESSAGE=":alert:${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }} PNC build failed. \n Please check the logs at ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \nCC - <!subteam^S05B904NQ6L|openshift-ai-devops>"
           echo "work_dir=$work_dir" >> $GITHUB_OUTPUT
           echo "abs_cwd=$abs_cwd" >> $GITHUB_OUTPUT
           {
