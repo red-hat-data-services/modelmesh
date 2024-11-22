@@ -8,7 +8,7 @@ metadata:
     build.appstudio.redhat.com/target_branch: '{{target_branch}}'
     pipelinesascode.tekton.dev/max-keep-runs: "3"
     build.appstudio.openshift.io/build-nudge-files: "build/operator-nudging.yaml"
-    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch == "rhoai-2.16" && !matches(source_branch, "^konflux/references") && !matches(source_branch, "^konflux/component-updates")
+    pipelinesascode.tekton.dev/on-cel-expression: event == "pull_request" && target_branch == "rhoai-2.16" && "artifacts.lock.yaml".pathChanged()
   creationTimestamp:
   labels:
     appstudio.openshift.io/application: rhoai-v2-16
@@ -57,7 +57,7 @@ spec:
       - name: secret-name
         value: rhoai-konflux-secret
       - name: key-name
-        value: slack-webhook
+        value: slack-poc-webhook
       taskRef:
         params:
         - name: name
@@ -159,7 +159,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: rhoai-konflux-secret
-                key: slack-component-failure-notification
+                key: slack-component-failure-poc-notification
           script: |
             pipelinerun_name=$(params.pipelinerun-name)
             target_branch={{target_branch}}
