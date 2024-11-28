@@ -13,14 +13,13 @@ RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unz
 RUN cd ./cachi2/output/deps/generic && \
     for file in *.zip; do unzip -d /root/ "$file"; done
 
-
 ###############################################################################
 #latest tag
 FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:592bf5e50453b6b89506df5b88b1ef51835914559b4e81355bcdcffe2e21dbaf as runtime
 
 ## Build args to be used at this step
 ARG USERID=2000
-
+ENV CI_CONTAINER_VERSION=v2.16.0
 LABEL com.redhat.component="odh-modelmesh-container" \
       name="managed-open-data-hub/odh-modelmesh-rhel8" \
       description="Modelmesh is a distributed LRU cache for serving runtime models" \
@@ -38,7 +37,6 @@ RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' 
 
 COPY --from=stage root/target/dockerhome/ /opt/kserve/mmesh/
 COPY --from=stage root/target/dockerhome/version /etc/modelmesh-version
-
 
 # Make this the current directory when starting the container
 WORKDIR /opt/kserve/mmesh
