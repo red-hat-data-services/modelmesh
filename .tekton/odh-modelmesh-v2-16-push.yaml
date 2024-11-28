@@ -57,7 +57,7 @@ spec:
       - name: secret-name
         value: rhoai-konflux-secret
       - name: key-name
-        value: slack-poc-webhook
+        value: slack-webhook
       taskRef:
         params:
         - name: name
@@ -159,7 +159,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: rhoai-konflux-secret
-                key: slack-component-failure-poc-notification
+                key: slack-component-failure-notification
           script: |
             pipelinerun_name=$(params.pipelinerun-name)
             target_branch={{target_branch}}
