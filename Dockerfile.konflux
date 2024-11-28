@@ -8,15 +8,11 @@ RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
 
 # Install packages for the install script and extract archives
-RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unzip jq wget git
+RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unzip jq wget
 
 RUN cd ./cachi2/output/deps/generic && \
     for file in *.zip; do unzip -d /root/ "$file"; done
 
-# Assume that source code comes from a Git repository
-RUN echo "$(date '+%Y%m%d')-$(git rev-parse HEAD | cut -c -5)" > target/dockerhome/build-version && \
-  echo "$(git rev-parse HEAD)" > target/dockerhome/release && \
-  echo "$(git branch --show-current|sed 's/^release-//g')-$(git branch --show-current)_$(date '+%Y%m%d')-$(git rev-parse HEAD | cut -c -5)" > target/dockerhome/version
 
 ###############################################################################
 #latest tag
@@ -42,6 +38,7 @@ RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' 
 
 COPY --from=stage root/target/dockerhome/ /opt/kserve/mmesh/
 COPY --from=stage root/target/dockerhome/version /etc/modelmesh-version
+
 
 # Make this the current directory when starting the container
 WORKDIR /opt/kserve/mmesh
