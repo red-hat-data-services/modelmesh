@@ -288,10 +288,10 @@ spec:
         value:
           - version=v2.16.0
           - url=$(params.git-url)
-          - release='$(tasks.clone-repository.results.commit-timestamp)' 
+          - release=$(tasks.clone-repository.results.commit-timestamp)
           - git.url=$(params.git-url)
           - git.commit=$(params.revision)
-          - io.openshift.tags="odh-modelmesh"
+          - io.openshift.tags=odh-modelmesh
       runAfter:
       - prefetch-dependencies
       taskRef:
