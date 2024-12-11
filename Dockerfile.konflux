@@ -19,8 +19,9 @@ RUN cd ./cachi2/output/deps/generic && \
 FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:f86ab776ae96ff2fcb376c4107ad3e7abefbb7fae794c56eddb56770f556a061 as runtime
 
 ## Build args to be used at this step
+ARG VERSION
 ARG USERID=2000
-ENV CI_CONTAINER_VERSION=v2.16.0
+
 LABEL com.redhat.component="odh-modelmesh-container" \
       name="managed-open-data-hub/odh-modelmesh-rhel8" \
       description="Modelmesh is a distributed LRU cache for serving runtime models" \
