@@ -45,6 +45,8 @@ WORKDIR /opt/kserve/mmesh
 
 RUN microdnf install shadow-utils
 
+RUN echo "${VERSION}"
+
 RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     chown -R app:0 /home/app && \
     chmod g+w /etc/passwd && \
@@ -52,7 +54,6 @@ RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     mkdir -p log && \
     chown -R app:0 . && \
     chmod -R 771 . && chmod 775 *.sh *.py && \
-    echo "${VERSION}" \
     echo "${VERSION}" > /opt/kserve/mmesh/build-version
 
 EXPOSE 8080
