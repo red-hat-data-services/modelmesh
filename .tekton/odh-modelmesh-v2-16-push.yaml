@@ -129,6 +129,9 @@ spec:
       description: Path to a file with build arguments for buildah, see https://www.mankier.com/1/buildah-build#--build-arg-file
       name: build-args-file
       type: string
+    - default: "v2.16.1"
+      name: version
+      type: string
     results:
     - description: ""
       name: IMAGE_URL
@@ -278,6 +281,7 @@ spec:
       - name: BUILD_ARGS
         value:
         - $(params.build-args[*])
+        - VERSION=$(params.version)
       - name: BUILD_ARGS_FILE
         value: $(params.build-args-file)
       - name: SOURCE_ARTIFACT
@@ -286,7 +290,7 @@ spec:
         value: $(tasks.prefetch-dependencies.results.CACHI2_ARTIFACT)
       - name: LABELS
         value:
-          - version=v2.16.1
+          - version=$(params.version)
           - url=$(params.git-url)
           - release=$(tasks.clone-repository.results.commit-timestamp)
           - git.url=$(params.git-url)
