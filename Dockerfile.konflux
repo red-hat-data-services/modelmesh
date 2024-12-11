@@ -1,6 +1,7 @@
 
 # Build arguments
 ARG SOURCE_CODE=.
+ARG VERSION
 
 FROM registry.redhat.io/ubi8/ubi-minimal@sha256:c12e67af6a7e15113d76bc72f10bef2045c026c71ec8b7124c8a075458188a83 AS stage
 
@@ -18,8 +19,9 @@ RUN cd ./cachi2/output/deps/generic && \
 FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:f86ab776ae96ff2fcb376c4107ad3e7abefbb7fae794c56eddb56770f556a061 as runtime
 
 ## Build args to be used at this step
+ARG VERSION
 ARG USERID=2000
-ENV CI_CONTAINER_VERSION=v2.16.0
+
 LABEL com.redhat.component="odh-modelmesh-container" \
       name="managed-open-data-hub/odh-modelmesh-rhel8" \
       description="Modelmesh is a distributed LRU cache for serving runtime models" \
@@ -50,7 +52,8 @@ RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     mkdir -p log && \
     chown -R app:0 . && \
     chmod -R 771 . && chmod 775 *.sh *.py && \
-    echo "${CI_CONTAINER_VERSION}" > /opt/kserve/mmesh/build-version
+    echo "${VERSION}" \
+    echo "${VERSION}" > /opt/kserve/mmesh/build-version
 
 EXPOSE 8080
 
