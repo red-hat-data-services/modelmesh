@@ -1,30 +1,25 @@
 
 # Build arguments
 ARG SOURCE_CODE=.
+ARG VERSION
 
 FROM registry.redhat.io/ubi8/ubi-minimal@sha256:c12e67af6a7e15113d76bc72f10bef2045c026c71ec8b7124c8a075458188a83 AS stage
 
-# Define a build argument for the PNC list of built files
-ARG PNC_FILES_JSON
-RUN echo "Files to download: $PNC_FILES_JSON"
+RUN ls -la ./cachi2/output
+RUN ls -la ./cachi2/output/deps
 
 # Install packages for the install script and extract archives
 RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unzip jq wget
 
-ENV STAGE_DIR="/tmp/artifacts"
-WORKDIR $STAGE_DIR
-
-# Filter the zip files only and unzip them in /root/
-RUN echo "$PNC_FILES_JSON" | jq -r '.[] | select(test("\\.zip$"))' | \
-    while read url; do wget --no-check-certificate "$url"; done && \
+RUN cd ./cachi2/output/deps/generic && \
     for file in *.zip; do unzip -d /root/ "$file"; done
-
 
 ###############################################################################
 #latest tag
 FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:f86ab776ae96ff2fcb376c4107ad3e7abefbb7fae794c56eddb56770f556a061 as runtime
 
 ## Build args to be used at this step
+ARG VERSION
 ARG USERID=2000
 
 LABEL com.redhat.component="odh-modelmesh-container" \
@@ -45,11 +40,12 @@ RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' 
 COPY --from=stage root/target/dockerhome/ /opt/kserve/mmesh/
 COPY --from=stage root/target/dockerhome/version /etc/modelmesh-version
 
-
 # Make this the current directory when starting the container
 WORKDIR /opt/kserve/mmesh
 
 RUN microdnf install shadow-utils
+
+RUN echo "${VERSION}"
 
 RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     chown -R app:0 /home/app && \
@@ -58,7 +54,7 @@ RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     mkdir -p log && \
     chown -R app:0 . && \
     chmod -R 771 . && chmod 775 *.sh *.py && \
-    echo "${CI_CONTAINER_VERSION}" > /opt/kserve/mmesh/build-version
+    echo "${VERSION}" > /opt/kserve/mmesh/build-version
 
 EXPOSE 8080
 
