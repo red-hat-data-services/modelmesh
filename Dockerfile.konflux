@@ -1,8 +1,9 @@
 
 # Build arguments
 ARG SOURCE_CODE=.
+ARG VERSION
 
-FROM registry.redhat.io/ubi8/ubi-minimal@sha256:7583ca0ea52001562bd81a961da3f75222209e6192e4e413ee226cff97dbd48c AS stage
+FROM registry.redhat.io/ubi8/ubi-minimal@sha256:c12e67af6a7e15113d76bc72f10bef2045c026c71ec8b7124c8a075458188a83 AS stage
 
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
@@ -13,12 +14,12 @@ RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unz
 RUN cd ./cachi2/output/deps/generic && \
     for file in *.zip; do unzip -d /root/ "$file"; done
 
-
 ###############################################################################
 #latest tag
-FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:dccda1807142b868566032e4855aa39e1621ac16bb15b2031cc6a1bd11980465 as runtime
+FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:f86ab776ae96ff2fcb376c4107ad3e7abefbb7fae794c56eddb56770f556a061 as runtime
 
 ## Build args to be used at this step
+ARG VERSION
 ARG USERID=2000
 
 LABEL com.redhat.component="odh-modelmesh-container" \
@@ -39,11 +40,12 @@ RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' 
 COPY --from=stage root/target/dockerhome/ /opt/kserve/mmesh/
 COPY --from=stage root/target/dockerhome/version /etc/modelmesh-version
 
-
 # Make this the current directory when starting the container
 WORKDIR /opt/kserve/mmesh
 
 RUN microdnf install shadow-utils
+
+RUN echo "${VERSION}"
 
 RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     chown -R app:0 /home/app && \
@@ -52,7 +54,7 @@ RUN useradd -c "Application User" -U -u ${USERID} -m app && \
     mkdir -p log && \
     chown -R app:0 . && \
     chmod -R 771 . && chmod 775 *.sh *.py && \
-    echo "${CI_CONTAINER_VERSION}" > /opt/kserve/mmesh/build-version
+    echo "${VERSION}" > /opt/kserve/mmesh/build-version
 
 EXPOSE 8080
 
