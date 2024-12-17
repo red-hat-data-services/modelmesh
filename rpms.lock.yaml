@@ -39,13 +39,13 @@ arches:
     name: libmetalink
     evr: 0.1.3-7.el8
     sourcerpm: libmetalink-0.1.3-7.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libsemanage-2.9-9.el8_6.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libsemanage-2.9-10.el8_10.x86_64.rpm
     repoid: ubi-8-baseos-rpms
-    size: 172128
-    checksum: sha256:1f686a73273028ca85b5a6ac858292d7b7d2fcbe379d6912ba12fc0a49ac4cce
+    size: 172692
+    checksum: sha256:a4223fd87cf94bc62f719ca1b3c82c3af28caf83bc55c587ad81136bf798e96b
     name: libsemanage
-    evr: 2.9-9.el8_6
-    sourcerpm: libsemanage-2.9-9.el8_6.src.rpm
+    evr: 2.9-10.el8_10
+    sourcerpm: libsemanage-2.9-10.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/s/shadow-utils-4.6-22.el8.x86_64.rpm
     repoid: ubi-8-baseos-rpms
     size: 1292332
@@ -53,12 +53,12 @@ arches:
     name: shadow-utils
     evr: 2:4.6-22.el8
     sourcerpm: shadow-utils-4.6-22.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/u/unzip-6.0-46.el8.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/u/unzip-6.0-47.el8_10.x86_64.rpm
     repoid: ubi-8-baseos-rpms
-    size: 200568
-    checksum: sha256:af382b8bbb076e8662abf092c89ddd233796c6b8ed201d37fbcfcc07824295dd
+    size: 200440
+    checksum: sha256:99e1415de872d65a36b89c2d646d66fa2d7b7d9ee34d4e1e24a9b00716c68c73
     name: unzip
-    evr: 6.0-46.el8
-    sourcerpm: unzip-6.0-46.el8.src.rpm
+    evr: 6.0-47.el8_10
+    sourcerpm: unzip-6.0-47.el8_10.src.rpm
   source: []
   module_metadata: []
