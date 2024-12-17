@@ -129,7 +129,7 @@ spec:
       description: Path to a file with build arguments for buildah, see https://www.mankier.com/1/buildah-build#--build-arg-file
       name: build-args-file
       type: string
-    - default: "v2.16.1"
+    - default: "v2.17.0"
       name: version
       type: string
     results:
