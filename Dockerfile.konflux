@@ -3,7 +3,7 @@
 ARG SOURCE_CODE=.
 ARG VERSION
 
-FROM registry.redhat.io/ubi8/ubi-minimal@sha256:cf095e5668919ba1b4ace3888107684ad9d587b1830d3eb56973e6a54f456e67 AS stage
+FROM registry.redhat.io/ubi8/ubi-minimal@sha256:c38cc770631788157f8ea989df65ff30359c9f8af3246fef244b32caed9d5862 AS stage
 
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
@@ -16,7 +16,7 @@ RUN cd ./cachi2/output/deps/generic && \
 
 ###############################################################################
 #latest tag
-FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:5ef7354f0eea1f6ae27a7ecc5cd37cdcb250284ffd933446c3cf3c9a4aee62cf as runtime
+FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:44aa4ecdfa7a17513aff2fbd4368b87df1e3a9c576ec673ebaa11fa9afc3d79e as runtime
 
 ## Build args to be used at this step
 ARG VERSION
