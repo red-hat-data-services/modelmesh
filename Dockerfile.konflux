@@ -1,9 +1,9 @@
-
 # Build arguments
 ARG SOURCE_CODE=.
 ARG VERSION
 
-FROM registry.redhat.io/ubi8/ubi-minimal@sha256:c38cc770631788157f8ea989df65ff30359c9f8af3246fef244b32caed9d5862 AS stage
+# Base builder
+FROM registry.redhat.io/ubi9-minimal:9.5@sha256:30bbd445046a3a63f5f5557a3c67dee74e3c8e7855eb0347630b020f3689823f AS stage
 
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
@@ -15,8 +15,8 @@ RUN cd ./cachi2/output/deps/generic && \
     for file in *.zip; do unzip -d /root/ "$file"; done
 
 ###############################################################################
-#latest tag
-FROM registry.redhat.io/ubi8/openjdk-17-runtime@sha256:44aa4ecdfa7a17513aff2fbd4368b87df1e3a9c576ec673ebaa11fa9afc3d79e as runtime
+# Runtime image
+FROM registry.redhat.io/ubi9/openjdk-21-runtime:1.21@sha256:e8bc39a2a10ea39231b4c0d0b7b8728969169f78051d25d0a2e29311d0cf00f8 as runtime
 
 ## Build args to be used at this step
 ARG VERSION
@@ -34,8 +34,8 @@ LABEL com.redhat.component="odh-modelmesh-container" \
 
 USER root
 
-RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' /usr/lib/jvm/java-17-openjdk-*/conf/security/java.security \
-    && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' /usr/lib/jvm/java-17-openjdk-*/conf/security/java.security
+RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security \
+    && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security
 
 COPY --from=stage root/target/dockerhome/ /opt/kserve/mmesh/
 COPY --from=stage root/target/dockerhome/version /etc/modelmesh-version
