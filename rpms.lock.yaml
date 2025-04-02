@@ -25,41 +25,20 @@ arches:
     name: wget
     evr: 1.21.1-8.el9_4
     sourcerpm: wget-1.21.1-8.el9_4.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/g/glibc-2.34-125.el9_5.3.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 2064994
-    checksum: sha256:ed99fdb1e7e6961738188aedda701f0b3937455abfb2d493cd852d5b0c65e36e
-    name: glibc
-    evr: 2.34-125.el9_5.3
-    sourcerpm: glibc-2.34-125.el9_5.3.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/g/glibc-common-2.34-125.el9_5.3.x86_64.rpm
+    size: 67454
+    checksum: sha256:ad1a62ef07682bb64a476c1a49f5cfc7abc9beb44775e7e511bf737e9a6bf99d
+    name: libpsl
+    evr: 0.21.1-5.el9
+    sourcerpm: libpsl-0.21.1-5.el9.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/p/publicsuffix-list-dafsa-20210518-3.el9.noarch.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 310308
-    checksum: sha256:3987d332cfe660906639782722df749c04c77bda9da50c91ed1678c5acafc01d
-    name: glibc-common
-    evr: 2.34-125.el9_5.3
-    sourcerpm: glibc-2.34-125.el9_5.3.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/g/glibc-minimal-langpack-2.34-125.el9_5.3.x86_64.rpm
-    repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 16969
-    checksum: sha256:12d6f54995345d418c1c94832b4bdf278357a2c6cf79554b43084f6d45bd1efb
-    name: glibc-minimal-langpack
-    evr: 2.34-125.el9_5.3
-    sourcerpm: glibc-2.34-125.el9_5.3.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/g/gnutls-3.8.3-4.el9_4.x86_64.rpm
-    repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 1131791
-    checksum: sha256:fb9f68d8fdf7adc1412430ef954fcc03cc762a97403ea9b65327979ae3793f39
-    name: gnutls
-    evr: 3.8.3-4.el9_4
-    sourcerpm: gnutls-3.8.3-4.el9_4.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/n/nettle-3.9.1-1.el9.x86_64.rpm
-    repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 577243
-    checksum: sha256:d79d0da00f8d564caf90508e2c31ea5162cf52c57f69661d9683ffcae6199de4
-    name: nettle
-    evr: 3.9.1-1.el9
-    sourcerpm: nettle-3.9.1-1.el9.src.rpm
+    size: 60882
+    checksum: sha256:e6ec3390a736b085f403168c512a6b2b6f8e12a8fd5a4459f1c7dbbff2b67c33
+    name: publicsuffix-list-dafsa
+    evr: 20210518-3.el9
+    sourcerpm: publicsuffix-list-20210518-3.el9.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/u/unzip-6.0-58.el9_5.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
     size: 190785
