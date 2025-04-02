@@ -6,3 +6,5 @@ packages:
   - jq
   - wget
   - shadow-utils
+context:
+    containerfile: ./Dockerfile.konflux
