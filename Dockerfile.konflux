@@ -14,7 +14,12 @@ RUN ls -la ./cachi2/output/deps
 RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unzip jq wget
 
 RUN cd ./cachi2/output/deps/generic && \
-    for file in *.zip; do unzip -d /root/ "$file"; done
+    for file in *.zip; do \
+        echo -n "File: $file, Size (bytes): "; \
+        stat -c '%s' "$file"; \
+        unzip -d /root/ "$file"; \
+    done
+
 
 ###############################################################################
 # Runtime image
