@@ -144,9 +144,6 @@ jobs:
           ls -l ${work_dir}/
           echo "LOCK_FILE_PATH=${work_dir}/artifacts.lock.yaml" >> $GITHUB_OUTPUT
           
-          # Extract ZIP file and write its contents into a new file
-          unzip -p "${work_dir}/your_file.zip" > "${work_dir}/unzipped_contents.txt"
-          
       - name: Git checkout component repo
         uses: actions/checkout@v4
         with:
