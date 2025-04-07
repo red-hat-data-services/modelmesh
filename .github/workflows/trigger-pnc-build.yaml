@@ -144,21 +144,15 @@ jobs:
           ls -l ${work_dir}/
           echo "LOCK_FILE_PATH=${work_dir}/artifacts.lock.yaml" >> $GITHUB_OUTPUT
           
-          # Extract the ZIP download URL from the YAML
-          download_url=$(yq '.artifacts[] | select(.download_url | endswith(".zip")) | .download_url' "${work_dir}/artifacts.lock.yaml")
+          # Extract download URL (already filtered to ZIPs)
+          download_url=$(yq '.artifacts[].download_url' "${work_dir}/artifacts.lock.yaml" | head -n 1)
           echo "Download URL: $download_url"
           
-          # Download the ZIP file
+          # Download and unzip
           curl -L "$download_url" -o "${work_dir}/artifact.zip"
-          
-          # Install unzip if needed (for Ubuntu runners)
           sudo apt-get update && sudo apt-get install -y unzip
-          
-          # Unzip the file to a directory
           mkdir -p "${work_dir}/unzipped"
           unzip -o "${work_dir}/artifact.zip" -d "${work_dir}/unzipped"
-
-          # Optionally list the contents
           ls -l "${work_dir}/unzipped"
 
       - name: Git checkout component repo
