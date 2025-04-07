@@ -144,9 +144,23 @@ jobs:
           ls -l ${work_dir}/
           echo "LOCK_FILE_PATH=${work_dir}/artifacts.lock.yaml" >> $GITHUB_OUTPUT
           
-          # Extract ZIP file and write its contents into a new file
-          unzip -p "${work_dir}/your_file.zip" > "${work_dir}/unzipped_contents.txt"
+          # Extract the ZIP download URL from the YAML
+          download_url=$(yq '.artifacts[] | select(.download_url | endswith(".zip")) | .download_url' "${work_dir}/artifacts.lock.yaml")
+          echo "Download URL: $download_url"
           
+          # Download the ZIP file
+          curl -L "$download_url" -o "${work_dir}/artifact.zip"
+          
+          # Install unzip if needed (for Ubuntu runners)
+          sudo apt-get update && sudo apt-get install -y unzip
+          
+          # Unzip the file to a directory
+          mkdir -p "${work_dir}/unzipped"
+          unzip -o "${work_dir}/artifact.zip" -d "${work_dir}/unzipped"
+
+          # Optionally list the contents
+          ls -l "${work_dir}/unzipped"
+
       - name: Git checkout component repo
         uses: actions/checkout@v4
         with:
@@ -169,15 +183,6 @@ jobs:
           author_name: Openshift-AI DevOps
           author_email: openshift-ai-devops@redhat.com
 
-      - name: Send Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_MESSAGE: '${{ steps.init.outputs.SLACK_MESSAGE }}'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTIFICATIONS_WEBHOOK }}
-          MSG_MINIMAL: true
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_FOOTER: ''
       - name: Cleanup workspace
         if: always()
         run: |
