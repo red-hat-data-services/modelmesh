@@ -7,6 +7,7 @@ FROM registry.redhat.io/ubi9-minimal:9.5@sha256:ac61c96b93894b9169221e8771873335
 
 RUN ls -la
 RUN ls -la .
+RUN ls -la ./cachi2
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
 
