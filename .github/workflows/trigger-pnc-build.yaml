@@ -143,6 +143,7 @@ jobs:
           cat ${work_dir}/artifacts.lock.yaml
           ls -l ${work_dir}/
           echo "LOCK_FILE_PATH=${work_dir}/artifacts.lock.yaml" >> $GITHUB_OUTPUT
+          
       - name: Git checkout component repo
         uses: actions/checkout@v4
         with:
