@@ -154,7 +154,12 @@ jobs:
           # Rename or move it to artifacts.zip
           mv "${work_dir}/artifact.zip" "${work_dir}/artifacts.zip"
           
-          # Optional: show what's in the directory
+          # Modify artifacts.lock.yaml to point to the future GitHub-hosted ZIP
+          github_zip_url="https://github.com/${{ github.repository }}/raw/${{ steps.get_branch.outputs.branch }}/artifacts.zip"
+          yq e ".artifacts[0].download_url = \"$github_zip_url\"" -i "${work_dir}/artifacts.lock.yaml"
+          
+          # Show result
+          cat "${work_dir}/artifacts.lock.yaml"
           ls -l "${work_dir}/"
          
 
