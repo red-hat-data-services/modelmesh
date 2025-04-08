@@ -150,10 +150,13 @@ jobs:
           
           # Download and unzip
           curl -L -k "$download_url" -o "${work_dir}/artifact.zip"
-          sudo apt-get update && sudo apt-get install -y unzip
-          mkdir -p "${work_dir}/unzipped"
-          unzip -o "${work_dir}/artifact.zip" -d "${work_dir}/unzipped"
-          ls -l "${work_dir}/unzipped"
+          
+          # Rename or move it to artifacts.zip
+          mv "${work_dir}/artifact.zip" "${work_dir}/artifacts.zip"
+          
+          # Optional: show what's in the directory
+          ls -l "${work_dir}/"
+         
 
       - name: Git checkout component repo
         uses: actions/checkout@v4
