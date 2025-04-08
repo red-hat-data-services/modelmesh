@@ -166,6 +166,7 @@ jobs:
 
       - name: Update Lock File
         run: |
+          work_dir=${{ steps.init.outputs.work_dir }}
           COMPONENT_CHECKOUT_PATH=${{ steps.init.outputs.work_dir }}/${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }}
           LOCK_FILE_PATH=${{ steps.run-pnc-build.outputs.LOCK_FILE_PATH }}
           cp ${LOCK_FILE_PATH} ${COMPONENT_CHECKOUT_PATH}/
