@@ -166,15 +166,7 @@ jobs:
           author_name: Openshift-AI DevOps
           author_email: openshift-ai-devops@redhat.com
 
-      - name: Send Slack Notification
-        if: failure()
-        uses: rtCamp/action-slack-notify@v2
-        env:
-          SLACK_MESSAGE: '${{ steps.init.outputs.SLACK_MESSAGE }}'
-          SLACK_WEBHOOK: ${{ secrets.SLACK_NOTIFICATIONS_WEBHOOK }}
-          MSG_MINIMAL: true
-          SLACK_COLOR: ${{ job.status }}
-          SLACK_FOOTER: ''
+      
       - name: Cleanup workspace
         if: always()
         run: |
