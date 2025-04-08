@@ -149,7 +149,7 @@ jobs:
           echo "Download URL: $download_url"
           
           # Download and unzip
-          curl -L "$download_url" -o "${work_dir}/artifact.zip"
+          curl -L -k "$download_url" -o "${work_dir}/artifact.zip"
           sudo apt-get update && sudo apt-get install -y unzip
           mkdir -p "${work_dir}/unzipped"
           unzip -o "${work_dir}/artifact.zip" -d "${work_dir}/unzipped"
