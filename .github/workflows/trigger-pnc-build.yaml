@@ -169,6 +169,7 @@ jobs:
           COMPONENT_CHECKOUT_PATH=${{ steps.init.outputs.work_dir }}/${{ vars.COMPONENT }}-${{ steps.get_branch.outputs.branch }}
           LOCK_FILE_PATH=${{ steps.run-pnc-build.outputs.LOCK_FILE_PATH }}
           cp ${LOCK_FILE_PATH} ${COMPONENT_CHECKOUT_PATH}/
+          cp ${work_dir}/artifacts.zip ${COMPONENT_CHECKOUT_PATH}/
 
       - name: Commit and push the changes to release branch
         uses: actions-js/push@master
