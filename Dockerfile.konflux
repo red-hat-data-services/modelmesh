@@ -3,7 +3,7 @@ ARG SOURCE_CODE=.
 ARG VERSION
 
 # Base builder
-FROM registry.redhat.io/ubi9-minimal:9.5@sha256:ac61c96b93894b9169221e87718733354dd3765dd4a62b275893c7ff0d876869 AS stage
+FROM registry.access.redhat.com/ubi9-minimal:9.5@sha256:ac61c96b93894b9169221e87718733354dd3765dd4a62b275893c7ff0d876869 AS stage
 
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
@@ -16,7 +16,7 @@ RUN cd ./cachi2/output/deps/generic && \
 
 ###############################################################################
 # Runtime image
-FROM registry.redhat.io/ubi8/openjdk-21-runtime:1.21@sha256:667693a2ec1f36fdb9fba546961074a89b9f8f1a0dcb2d1cb7cb905bdacd2f98 as runtime
+FROM registry.access.redhat.com/ubi9/openjdk-21-runtime:1.21@sha256:360822c35c5741f542ab78fe123e6c4d9b68e0113a88d6e0250bb1f377b17f29 as runtime
 
 
 ## Build args to be used at this step
@@ -44,7 +44,7 @@ COPY --from=stage root/target/dockerhome/version /etc/modelmesh-version
 # Make this the current directory when starting the container
 WORKDIR /opt/kserve/mmesh
 
-RUN microdnf install shadow-utils
+RUN microdnf install -y shadow-utils
 
 RUN echo "${VERSION}"
 
