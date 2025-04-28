@@ -5,6 +5,3 @@ packages:
   - unzip
   - jq
   - wget
-  - shadow-utils
-context:
-    containerfile: ./Dockerfile.konflux
