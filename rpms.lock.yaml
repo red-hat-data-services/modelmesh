@@ -2,84 +2,85 @@
 lockfileVersion: 1
 lockfileVendor: redhat
 arches:
-- arch: x86_64
-  packages:
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/j/jq-1.6-15.el9.x86_64.rpm
-    repoid: ubi-9-for-x86_64-appstream-rpms
-    size: 194271
-    checksum: sha256:d3157267cce88006c2ad3327ea7eb8983bea6f69327c157228b89814a3c473ae
-    name: jq
-    evr: 1.6-15.el9
-    sourcerpm: jq-1.6-15.el9.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/o/oniguruma-6.9.6-1.el9.5.x86_64.rpm
-    repoid: ubi-9-for-x86_64-appstream-rpms
-    size: 226331
-    checksum: sha256:6c884cc2216e5b4699ebd8cde27b39e99532520b367f645ed6cc660d081916dc
-    name: oniguruma
-    evr: 6.9.6-1.el9.5
-    sourcerpm: oniguruma-6.9.6-1.el9.5.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/w/wget-1.21.1-8.el9_4.x86_64.rpm
-    repoid: ubi-9-for-x86_64-appstream-rpms
-    size: 807555
-    checksum: sha256:a5366a624f63487a0cfc5fc2fe15148d6c31be27c80cf00815f25324e3d0d729
-    name: wget
-    evr: 1.21.1-8.el9_4
-    sourcerpm: wget-1.21.1-8.el9_4.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.x86_64.rpm
-    repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 67454
-    checksum: sha256:ad1a62ef07682bb64a476c1a49f5cfc7abc9beb44775e7e511bf737e9a6bf99d
-    name: libpsl
-    evr: 0.21.1-5.el9
-    sourcerpm: libpsl-0.21.1-5.el9.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/p/publicsuffix-list-dafsa-20210518-3.el9.noarch.rpm
-    repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 60882
-    checksum: sha256:e6ec3390a736b085f403168c512a6b2b6f8e12a8fd5a4459f1c7dbbff2b67c33
-    name: publicsuffix-list-dafsa
-    evr: 20210518-3.el9
-    sourcerpm: publicsuffix-list-20210518-3.el9.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/u/unzip-6.0-58.el9_5.x86_64.rpm
-    repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 190785
-    checksum: sha256:009698f3b4432b9df219fd2f894234aad1cee8c4e4e61384b4e293ef8e28e9c2
-    name: unzip
-    evr: 6.0-58.el9_5
-    sourcerpm: unzip-6.0-58.el9_5.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/j/jq-1.6-9.el8_10.x86_64.rpm
-    repoid: ubi-8-for-x86_64-appstream-rpms
-    size: 207896
-    checksum: sha256:baaa3660d87c4f3c12776e051b7f13835fee8918389a57673519e3389eb7aa3b
-    name: jq
-    evr: 1.6-9.el8_10
-    sourcerpm: jq-1.6-9.el8_10.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/o/oniguruma-6.8.2-3.el8.x86_64.rpm
-    repoid: ubi-8-for-x86_64-appstream-rpms
-    size: 192632
-    checksum: sha256:1c5c91d8a33987892ec7320c08311a31245be91800aa5879e20d137971bd053f
-    name: oniguruma
-    evr: 6.8.2-3.el8
-    sourcerpm: oniguruma-6.8.2-3.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/w/wget-1.19.5-12.el8_10.x86_64.rpm
-    repoid: ubi-8-for-x86_64-appstream-rpms
-    size: 751872
-    checksum: sha256:8d609774711cea9728faf684ff7e9b389f0f3c2052aa04bcf3061950a830058b
-    name: wget
-    evr: 1.19.5-12.el8_10
-    sourcerpm: wget-1.19.5-12.el8_10.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libmetalink-0.1.3-7.el8.x86_64.rpm
-    repoid: ubi-8-for-x86_64-baseos-rpms
-    size: 32784
-    checksum: sha256:cd7c30d21e7240f60f0861c229e17fda43e855ab4c78fab39f47f7ae2be5720e
-    name: libmetalink
-    evr: 0.1.3-7.el8
-    sourcerpm: libmetalink-0.1.3-7.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/u/unzip-6.0-47.el8_10.x86_64.rpm
-    repoid: ubi-8-for-x86_64-baseos-rpms
-    size: 200440
-    checksum: sha256:99e1415de872d65a36b89c2d646d66fa2d7b7d9ee34d4e1e24a9b00716c68c73
-    name: unzip
-    evr: 6.0-47.el8_10
-    sourcerpm: unzip-6.0-47.el8_10.src.rpm
-  source: []
-  module_metadata: []
+  - arch: x86_64
+    packages:
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/j/jq-1.6-15.el9.x86_64.rpm
+        repoid: ubi-9-for-x86_64-appstream-rpms
+        size: 194271
+        checksum: sha256:d3157267cce88006c2ad3327ea7eb8983bea6f69327c157228b89814a3c473ae
+        name: jq
+        evr: 1.6-15.el9
+        sourcerpm: jq-1.6-15.el9.src.rpm
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/o/oniguruma-6.9.6-1.el9.5.x86_64.rpm
+        repoid: ubi-9-for-x86_64-appstream-rpms
+        size: 226331
+        checksum: sha256:6c884cc2216e5b4699ebd8cde27b39e99532520b367f645ed6cc660d081916dc
+        name: oniguruma
+        evr: 6.9.6-1.el9.5
+        sourcerpm: oniguruma-6.9.6-1.el9.5.src.rpm
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/w/wget-1.21.1-8.el9_4.x86_64.rpm
+        repoid: ubi-9-for-x86_64-appstream-rpms
+        size: 807555
+        checksum: sha256:a5366a624f63487a0cfc5fc2fe15148d6c31be27c80cf00815f25324e3d0d729
+        name: wget
+        evr: 1.21.1-8.el9_4
+        sourcerpm: wget-1.21.1-8.el9_4.src.rpm
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.x86_64.rpm
+        repoid: ubi-9-for-x86_64-baseos-rpms
+        size: 67454
+        checksum: sha256:ad1a62ef07682bb64a476c1a49f5cfc7abc9beb44775e7e511bf737e9a6bf99d
+        name: libpsl
+        evr: 0.21.1-5.el9
+        sourcerpm: libpsl-0.21.1-5.el9.src.rpm
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/p/publicsuffix-list-dafsa-20210518-3.el9.noarch.rpm
+        repoid: ubi-9-for-x86_64-baseos-rpms
+        size: 60882
+        checksum: sha256:e6ec3390a736b085f403168c512a6b2b6f8e12a8fd5a4459f1c7dbbff2b67c33
+        name: publicsuffix-list-dafsa
+        evr: 20210518-3.el9
+        sourcerpm: publicsuffix-list-20210518-3.el9.src.rpm
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/u/unzip-6.0-58.el9_5.x86_64.rpm
+        repoid: ubi-9-for-x86_64-baseos-rpms
+        size: 190785
+        checksum: sha256:009698f3b4432b9df219fd2f894234aad1cee8c4e4e61384b4e293ef8e28e9c2
+        name: unzip
+        evr: 6.0-58.el9_5
+        sourcerpm: unzip-6.0-58.el9_5.src.rpm
+    source:
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/source/SRPMS/Packages/j/jq-1.6-15.el9.src.rpm
+        repoid: ubi-9-for-x86_64-appstream-source-rpms
+        size: 1472643
+        checksum: sha256:0a24a71d0f1ceab183d903f840a6c548e6868cd3f67ea794e57108c313321553
+        name: jq
+        evr: 1.6-15.el9
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/source/SRPMS/Packages/o/oniguruma-6.9.6-1.el9.5.src.rpm
+        repoid: ubi-9-for-x86_64-appstream-source-rpms
+        size: 934541
+        checksum: sha256:cba17754ccaffd886995aec7f152aadbc5d9932a2a2cdf1d983291c7b2838404
+        name: oniguruma
+        evr: 6.9.6-1.el9.5
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/source/SRPMS/Packages/w/wget-1.21.1-8.el9_4.src.rpm
+        repoid: ubi-9-for-x86_64-appstream-source-rpms
+        size: 4907486
+        checksum: sha256:001c087565034e44df1a935bc4aabb44b7b47b3187752c8b18e44c3900f6fd67
+        name: wget
+        evr: 1.21.1-8.el9_4
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/l/libpsl-0.21.1-5.el9.src.rpm
+        repoid: ubi-9-for-x86_64-baseos-source-rpms
+        size: 9160109
+        checksum: sha256:0325329a882e68a2f817bac959abe49abc67d3dac9381a5a02c006916a86f17c
+        name: libpsl
+        evr: 0.21.1-5.el9
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/p/publicsuffix-list-20210518-3.el9.src.rpm
+        repoid: ubi-9-for-x86_64-baseos-source-rpms
+        size: 93646
+        checksum: sha256:3e2e87867d4d3967d0cd00d1a80812438e5b20eda61b620fe8b62084e528490b
+        name: publicsuffix-list
+        evr: 20210518-3.el9
+      - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/u/unzip-6.0-58.el9_5.src.rpm
+        repoid: ubi-9-for-x86_64-baseos-source-rpms
+        size: 1436757
+        checksum: sha256:49de0234c5e8f588c94b435c35225bcccd4cc94bb19cac94110d9aa0c5060f69
+        name: unzip
+        evr: 6.0-58.el9_5
+    module_metadata: []
