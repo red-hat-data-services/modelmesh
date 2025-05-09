@@ -1,5 +1,5 @@
 arches:
-- x86_64
+  - x86_64
 contentOrigin:
   repofiles:
     - ubi.repo
@@ -7,3 +7,5 @@ packages:
   - unzip
   - jq
   - wget
+context:
+  containerfile: Dockerfile.konflux
