@@ -29,7 +29,7 @@ spec:
   - name: path-context
     value: .
   - name: prefetch-input
-    value: [{"path": ".", "type": "rpm"}, {"path": ".", "type": "generic"}]
+    value: '[{"path":".","type":"rpm"},{"path":".","type":"generic"}]'
   pipelineSpec:
     description: |
       This pipeline is ideal for building container images from a Containerfile while maintaining trust after pipeline customization.
@@ -584,7 +584,8 @@ spec:
       optional: true
     - name: netrc
       optional: true
-  taskRunTemplate: {}
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-modelmesh-test
   workspaces:
   - name: git-auth
     secret:
