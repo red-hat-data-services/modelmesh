@@ -11,6 +11,9 @@ RUN ls -la ./cachi2/output/deps
 # Install packages for the install script and extract archives
 RUN microdnf --setopt=install_weak_deps=0 --setopt=tsflags=nodocs install -y unzip jq wget
 
+RUN cd ./cachi2/output/deps/generic && \
+    for file in *.zip; do unzip -d /root/ "$file"; done
+
 ###############################################################################
 # Runtime image
 FROM registry.redhat.io/ubi9/openjdk-21-runtime@sha256:9414aacc4fca4c7e55df94c58f66f6f91b9fd0ed88f7110642c815db92172819 as runtime
