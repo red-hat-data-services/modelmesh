@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - 'rhoai-2.1[6-9]+'
+      - 'rhoai-2.[2-9][0-9]' # Trigger the workflow on pushes to any rhoai-2.20 to rhoai-2.99 branch
     paths-ignore:
       - .tekton/**
       - .github/**
