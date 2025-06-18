@@ -37,7 +37,7 @@ USER root
 
 # remove python-devel and setuptools packages as it is not needed in the final runtime image
 # Fixes CVE-2025-47273
-RUN microdnf remove -y python3.11-devel python3.11-setuptools
+RUN microdnf remove -y python3.11-setuptools
 
 RUN sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security \
     && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security
