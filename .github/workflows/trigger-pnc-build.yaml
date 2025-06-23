@@ -27,7 +27,7 @@ jobs:
       - self-hosted
       - pnc
     container:
-      image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli:48a761b5093bc474850b2ebcf06641825940deb7
+      image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli:01efd2a25fe71e192892930d342d548c698a5bcb
       options: --user root
     steps:
       - name: Get Current branch name
