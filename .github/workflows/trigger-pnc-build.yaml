@@ -27,7 +27,7 @@ jobs:
       - self-hosted
       - pnc
     container:
-      image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli:01efd2a25fe71e192892930d342d548c698a5bcb
+      image: quay.io/rhoai/bacon:latest
       options: --user root
     steps:
       - name: Get Current branch name
@@ -127,7 +127,7 @@ jobs:
 
           echo -e "\nStarting the PNC build ..."
           PNC_CLI_OUTPUT_FILE="pnc-cli-run-output.json"
-          java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 ${work_dir} -p ${work_dir} --profile ${PNC_PROFILE} --jsonOutput > ${work_dir}/$PNC_CLI_OUTPUT_FILE
+          java -jar /home/jenkins/bacon/bacon.jar pig run --mode=FORCE --downloadAttempts=3 ${work_dir} -p ${work_dir} --profile ${PNC_PROFILE} --jsonOutput > ${work_dir}/$PNC_CLI_OUTPUT_FILE
 
           echo -e "\nFinished the PNC build!"
           echo -e "\n=== PNC build output ==="
