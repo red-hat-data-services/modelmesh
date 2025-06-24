@@ -64,7 +64,7 @@ jobs:
           ln -s $yq_filename yq
           cp $yq_filename /usr/local/bin/yq
           
-          microdnf install -y git
+          microdnf install -y git gettext
       - name: Checkout build config
         id: checkout-build-config
         run: |
