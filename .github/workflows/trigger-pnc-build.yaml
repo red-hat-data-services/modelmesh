@@ -127,7 +127,7 @@ jobs:
 
           echo -e "\nStarting the PNC build ..."
           PNC_CLI_OUTPUT_FILE="pnc-cli-run-output.json"
-          java -jar /home/jenkins/bacon/bacon.jar pig run --mode=FORCE --downloadAttempts=3 ${work_dir} -p ${work_dir} --profile ${PNC_PROFILE} --jsonOutput > ${work_dir}/$PNC_CLI_OUTPUT_FILE
+          java -jar /home/jboss/bacon.jar pig run --mode=FORCE --downloadAttempts=3 ${work_dir} -p ${work_dir} --profile ${PNC_PROFILE} --jsonOutput > ${work_dir}/$PNC_CLI_OUTPUT_FILE
 
           echo -e "\nFinished the PNC build!"
           echo -e "\n=== PNC build output ==="
