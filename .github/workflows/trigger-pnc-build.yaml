@@ -27,7 +27,7 @@ jobs:
       - self-hosted
       - pnc
     container:
-      image: quay.io/rhoai/bacon:latest
+      image: quay.io/redhat-user-workloads/konflux-jbs-pnc-tenant/pnc/pnc-cli:48a761b5093bc474850b2ebcf06641825940deb7
       options: --user root
     steps:
       - name: Get Current branch name
@@ -64,7 +64,7 @@ jobs:
           ln -s $yq_filename yq
           cp $yq_filename /usr/local/bin/yq
           
-          microdnf install -y git gettext
+          microdnf install -y git
       - name: Checkout build config
         id: checkout-build-config
         run: |
