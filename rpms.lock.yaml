@@ -39,13 +39,6 @@ arches:
     name: libmetalink
     evr: 0.1.3-7.el8
     sourcerpm: libmetalink-0.1.3-7.el8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libselinux-2.9-10.el8_10.x86_64.rpm
-    repoid: ubi-8-for-x86_64-baseos-rpms
-    size: 170016
-    checksum: sha256:41c31dde6e5e6928f66f5541586a2ed32bb088e8e5585dd6ce1d60c04e1d667f
-    name: libselinux
-    evr: 2.9-10.el8_10
-    sourcerpm: libselinux-2.9-10.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libsemanage-2.9-12.el8_10.x86_64.rpm
     repoid: ubi-8-for-x86_64-baseos-rpms
     size: 173008
