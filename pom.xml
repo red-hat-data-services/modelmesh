@@ -436,6 +436,10 @@
       <groupId>io.grpc</groupId>
       <artifactId>grpc-netty</artifactId>
     </dependency>
+    <dependency>
+      <groupId>io.grpc</groupId>
+      <artifactId>grpc-core</artifactId>
+    </dependency>
 
     <!-- This is required for compiling on java11+, to provide
        the @Generated annotation used in the protoc-generated
