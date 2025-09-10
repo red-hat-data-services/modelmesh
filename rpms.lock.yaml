@@ -9,21 +9,21 @@ arches:
     size: 208552
     checksum: sha256:fe609ca5ea627f11fc4cd55cca0279f220f82e49045bfd59c38b560c82167662
     name: jq
-    evr: 1.6-17.el9_6.2
+    evr: 1.6-11.el8_10
     sourcerpm: jq-1.6-11.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/o/oniguruma-6.8.2-3.el8.x86_64.rpm
     repoid: ubi-8-for-x86_64-appstream-rpms
     size: 192632
     checksum: sha256:1c5c91d8a33987892ec7320c08311a31245be91800aa5879e20d137971bd053f
     name: oniguruma
-    evr: 6.9.6-1.el9.5
+    evr: 6.8.2-3.el8
     sourcerpm: oniguruma-6.8.2-3.el8.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/w/wget-1.19.5-12.el8_10.x86_64.rpm
     repoid: ubi-8-for-x86_64-appstream-rpms
     size: 751872
     checksum: sha256:8d609774711cea9728faf684ff7e9b389f0f3c2052aa04bcf3061950a830058b
     name: wget
-    evr: 1.21.1-8.el9_4
+    evr: 1.19.5-12.el8_10
     sourcerpm: wget-1.19.5-12.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/e/expat-2.2.5-17.el8_10.x86_64.rpm
     repoid: ubi-8-for-x86_64-baseos-rpms
@@ -39,6 +39,13 @@ arches:
     name: libmetalink
     evr: 0.1.3-7.el8
     sourcerpm: libmetalink-0.1.3-7.el8.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libselinux-2.9-10.el8_10.x86_64.rpm
+    repoid: ubi-8-for-x86_64-baseos-rpms
+    size: 170016
+    checksum: sha256:41c31dde6e5e6928f66f5541586a2ed32bb088e8e5585dd6ce1d60c04e1d667f
+    name: libselinux
+    evr: 2.9-10.el8_10
+    sourcerpm: libselinux-2.9-10.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/baseos/os/Packages/l/libsemanage-2.9-12.el8_10.x86_64.rpm
     repoid: ubi-8-for-x86_64-baseos-rpms
     size: 173008
@@ -58,7 +65,7 @@ arches:
     size: 200764
     checksum: sha256:f08307816a4aae5924ab3775c14a41124db9f8750d83bee2ecb93a29a3b5130a
     name: unzip
-    evr: 6.0-58.el9_5
+    evr: 6.0-48.el8_10
     sourcerpm: unzip-6.0-48.el8_10.src.rpm
   source: []
   module_metadata: []
