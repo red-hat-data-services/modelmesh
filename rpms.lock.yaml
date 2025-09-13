@@ -9,7 +9,7 @@ arches:
     size: 208552
     checksum: sha256:fe609ca5ea627f11fc4cd55cca0279f220f82e49045bfd59c38b560c82167662
     name: jq
-    evr: 1.6-17.el9_6.2
+    evr: 1.6-11.el8_10
     sourcerpm: jq-1.6-11.el8_10.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi8/8/x86_64/appstream/os/Packages/o/oniguruma-6.8.2-3.el8.x86_64.rpm
     repoid: ubi-8-for-x86_64-appstream-rpms
