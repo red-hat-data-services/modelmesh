@@ -16,7 +16,7 @@ RUN cd ./cachi2/output/deps/generic && \
 
 ###############################################################################
 # Runtime image
-FROM registry.redhat.io/ubi9/openjdk-21-runtime@sha256:381e4f75c654b4e60b6a39147e803480f85bd3af7db291c0c522811c94f31848 as runtime
+FROM registry.redhat.io/ubi9/openjdk-21-runtime@sha256:b223fdb4fdd1b09fd5792f86e9d504a9cbb7a13bad65fb016812287c85718c60 as runtime
 
 
 ## Build args to be used at this step
