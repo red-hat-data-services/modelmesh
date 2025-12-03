@@ -1,5 +1,5 @@
 metadata:
   version: "1.0"
 artifacts:
-  - download_url: https://indy.corp.redhat.com/api/content/maven/hosted/pnc-builds/com/ibm/watson/model-mesh/0.4.2.managedsvc-redhat-02063/model-mesh-0.4.2.managedsvc-redhat-02063.zip
-    checksum: sha256:b4f7468396fafde8a9217bb14dc6babe5a18f601154988a3c338529329812669
+  - download_url: https://indy.corp.redhat.com/api/content/maven/hosted/pnc-builds/com/ibm/watson/model-mesh/0.4.2.managedsvc-redhat-02072/model-mesh-0.4.2.managedsvc-redhat-02072.zip
+    checksum: sha256:299bc4ff84e3d651a79d73703e3fe758d09707c257e76a1ede7aa6c7b9d8541a
