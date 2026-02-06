@@ -16,7 +16,7 @@ RUN cd ./cachi2/output/deps/generic && \
 
 ###############################################################################
 #latest tag
-FROM registry.redhat.io/ubi9/openjdk-17-runtime@sha256:c303955527bc956f72024bb87b4174a7eeda9c18998b4e10ec66f531e1a355db as runtime
+FROM registry.redhat.io/ubi9/openjdk-17-runtime@sha256:04a9ec283692c0504a604ede447a5aab9f57eff48bf24be8a9dbaaffda9e0cdc as runtime
 ## Build args to be used at this step
 ARG VERSION
 ARG USERID=2000
