@@ -3,7 +3,7 @@
 ARG SOURCE_CODE=.
 ARG VERSION
 
-FROM registry.redhat.io/ubi8/ubi-minimal@sha256:6ed9271b3d3e7147728afaf8917a936c0db2f1badba59550288c2cc772afb58f AS stage
+FROM registry.redhat.io/ubi8/ubi-minimal@sha256:b880e16b888f47bc3fae64e67cd9776b24372f2e7ec2051f5a9386de6f5a75ac AS stage
 
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
