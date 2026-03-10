@@ -32,19 +32,21 @@ RUN --mount=type=cache,target=/root/.cache/microdnf:rw \
     microdnf --setopt=cachedir=/root/.cache/microdnf --nodocs install -y \
        java-21-openjdk-devel \
        nss \
-    && microdnf update -y --nodocs \
-    && sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security \
-    && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security \
+    && microdnf update --nodocs -y \
+    && sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' ${JAVA_HOME}/conf/security/java.security \
+    && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' ${JAVA_HOME}/conf/security/java.security \
     && java -version \
     && true
 
 RUN --mount=type=cache,target=/root/.cache/microdnf:rw \
-    microdnf --setopt=cachedir=/root/.cache/microdnf --nodocs install -y \
+     microdnf -y module enable maven:3.9 \
+     && microdnf --setopt=cachedir=/root/.cache/microdnf --nodocs install -y \
        wget \
        tar \
        gzip \
        maven \
        git \
+       maven-openjdk21 \
     && true
 
 # Install etcd -- used for CI tests
@@ -96,9 +98,9 @@ RUN --mount=type=cache,target=/root/.cache/microdnf:rw \
     microdnf --setopt=cachedir=/root/.cache/microdnf --nodocs install -y \
        java-21-openjdk-headless \
        nss \
-    && microdnf update -y --nodocs \
-    && sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security \
-    && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' /usr/lib/jvm/java-21-openjdk-*/conf/security/java.security \
+    && microdnf update --nodocs -y \
+    && sed -i 's:security.provider.12=SunPKCS11:#security.provider.12=SunPKCS11:g' ${JAVA_HOME}/conf/security/java.security \
+    && sed -i 's:#security.provider.1=SunPKCS11 ${java.home}/lib/security/nss.cfg:security.provider.12=SunPKCS11 ${java.home}/lib/security/nss.cfg:g' ${JAVA_HOME}/conf/security/java.security \
     && java -version \
     && true
 

@@ -147,9 +147,11 @@ public class RemotePayloadProcessor implements PayloadProcessor {
 
     public RemotePayloadProcessor(URI uri, SSLContext sslContext, SSLParameters sslParameters) {
         validateUri(uri);
+
         this.uri = uri;
         this.sslContext = sslContext;
         this.sslParameters = sslParameters;
+
         if (sslContext != null && sslParameters != null) {
             // OWASP SSRF Prevention: Explicitly disable HTTP redirects to prevent bypass
             this.client = HttpClient.newBuilder()
@@ -211,7 +213,7 @@ public class RemotePayloadProcessor implements PayloadProcessor {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             if (response.statusCode() != 200) {
-                logger.warn("Processing {} with request {} didn't succeed: {}", payload, payloadContent, response);
+                logger.warn("Processing {} didn't succeed: {}", payload, response);
             }
         } catch (Throwable e) {
             logger.error("An error occurred while sending payload {} to {}: {}", payload, uri, e.getCause());
