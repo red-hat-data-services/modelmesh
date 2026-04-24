@@ -3,7 +3,7 @@ ARG SOURCE_CODE=.
 ARG VERSION
 
 # Base builder
-FROM registry.redhat.io/ubi9-minimal@sha256:7d4e47500f28ac3a2bff06c25eff9127ff21048538ae03ce240d57cf756acd00 AS stage
+FROM registry.redhat.io/ubi9-minimal:latest AS stage
 
 RUN ls -la ./cachi2/output
 RUN ls -la ./cachi2/output/deps
@@ -16,7 +16,7 @@ RUN cd ./cachi2/output/deps/generic && \
 
 ###############################################################################
 # Runtime image
-FROM registry.redhat.io/ubi9/openjdk-21-runtime@sha256:4f77a4aef51bb959a7af413b702d2b5db9b530c9bc09d10758947d5c73b7bafc as runtime
+FROM registry.redhat.io/ubi9/openjdk-21-runtime:1.24 as runtime
 
 
 ## Build args to be used at this step
