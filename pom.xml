@@ -68,7 +68,8 @@
     <jackson-databind-version>2.18.8</jackson-databind-version>
     <gson-version>2.10.1</gson-version>
     <!-- CVE-2026-43869: Apache Thrift security bypass due to improper certificate validation fixed in 0.23.0 -->
-    <thrift-version>0.23.0</thrift-version>
+    <!-- CVE-2026-45112: Apache Thrift Denial of Service due to uncontrolled resource allocation fixed in 0.24.0 -->
+    <thrift-version>0.24.0</thrift-version>
     <eclipse-collections-version>11.1.0</eclipse-collections-version>
     <log4j2-version>2.25.4</log4j2-version>
     <slf4j-version>1.7.36</slf4j-version>
