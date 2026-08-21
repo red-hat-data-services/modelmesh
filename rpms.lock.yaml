@@ -18,13 +18,13 @@ arches:
     name: wget
     evr: 1.21.1-8.el9_4
     sourcerpm: wget-1.21.1-8.el9_4.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/j/jq-1.6-17.el9_6.2.aarch64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/j/jq-1.6-19.el9_8.2.aarch64.rpm
     repoid: ubi-9-for-aarch64-baseos-rpms
-    size: 185443
-    checksum: sha256:46c953403e2da3202cb0509f4895afacbbfa95f840b4e228dc4c72c1523b8aae
+    size: 191195
+    checksum: sha256:633aaf3e87b19d4a591bd9f47cd81fde8ec49629d3f58932addfc8a134b7949d
     name: jq
-    evr: 1.6-17.el9_6.2
-    sourcerpm: jq-1.6-17.el9_6.2.src.rpm
+    evr: 1.6-19.el9_8.2
+    sourcerpm: jq-1.6-19.el9_8.2.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.aarch64.rpm
     repoid: ubi-9-for-aarch64-baseos-rpms
     size: 67300
@@ -39,13 +39,13 @@ arches:
     name: publicsuffix-list-dafsa
     evr: 20210518-3.el9
     sourcerpm: publicsuffix-list-20210518-3.el9.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/u/unzip-6.0-58.el9_5.aarch64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/u/unzip-6.0-60.el9.aarch64.rpm
     repoid: ubi-9-for-aarch64-baseos-rpms
-    size: 186875
-    checksum: sha256:edc9b5c0adcfbe04cbfd4cc6a23d326c82ab816eb1fc521f7e483add8bb2b8cd
+    size: 182733
+    checksum: sha256:424c0f9800ccc12123b854a19f786451f0f8c70de51fc9144bd014df70453c17
     name: unzip
-    evr: 6.0-58.el9_5
-    sourcerpm: unzip-6.0-58.el9_5.src.rpm
+    evr: 6.0-60.el9
+    sourcerpm: unzip-6.0-60.el9.src.rpm
   source:
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/appstream/source/SRPMS/Packages/o/oniguruma-6.9.6-1.el9.5.src.rpm
     repoid: ubi-9-for-aarch64-appstream-source-rpms
@@ -59,12 +59,12 @@ arches:
     checksum: sha256:001c087565034e44df1a935bc4aabb44b7b47b3187752c8b18e44c3900f6fd67
     name: wget
     evr: 1.21.1-8.el9_4
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/j/jq-1.6-17.el9_6.2.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/j/jq-1.6-19.el9_8.2.src.rpm
     repoid: ubi-9-for-aarch64-baseos-source-rpms
-    size: 1505374
-    checksum: sha256:88870e90abd12a46ac6da90154b82e5f4f3f5fbf5fb9116160e85875436aa8fa
+    size: 1512470
+    checksum: sha256:abe953ef93fb49db17177190dc0698ab649f18a0bfaef4bb0ef0cd94644d1ec3
     name: jq
-    evr: 1.6-17.el9_6.2
+    evr: 1.6-19.el9_8.2
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/l/libpsl-0.21.1-5.el9.src.rpm
     repoid: ubi-9-for-aarch64-baseos-source-rpms
     size: 9160109
@@ -77,12 +77,12 @@ arches:
     checksum: sha256:3e2e87867d4d3967d0cd00d1a80812438e5b20eda61b620fe8b62084e528490b
     name: publicsuffix-list
     evr: 20210518-3.el9
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/u/unzip-6.0-58.el9_5.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/u/unzip-6.0-60.el9.src.rpm
     repoid: ubi-9-for-aarch64-baseos-source-rpms
-    size: 1436757
-    checksum: sha256:49de0234c5e8f588c94b435c35225bcccd4cc94bb19cac94110d9aa0c5060f69
+    size: 1436236
+    checksum: sha256:2f745809f67389b9cb4bc051a16a8e1b3049253632a0c34943695b2330717c48
     name: unzip
-    evr: 6.0-58.el9_5
+    evr: 6.0-60.el9
   module_metadata: []
 - arch: x86_64
   packages:
@@ -100,13 +100,13 @@ arches:
     name: wget
     evr: 1.21.1-8.el9_4
     sourcerpm: wget-1.21.1-8.el9_4.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/j/jq-1.6-17.el9_6.2.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/j/jq-1.6-19.el9_8.2.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 191681
-    checksum: sha256:d3c6d74db82f6c55533f2d9798d2d4e44988d212880b5b2afd855a43fe2b17d9
+    size: 197453
+    checksum: sha256:9793a39a4746a09ba89c3d9ccc70150ac6c878286deee26d7e3aabede4666417
     name: jq
-    evr: 1.6-17.el9_6.2
-    sourcerpm: jq-1.6-17.el9_6.2.src.rpm
+    evr: 1.6-19.el9_8.2
+    sourcerpm: jq-1.6-19.el9_8.2.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
     size: 67454
@@ -121,13 +121,13 @@ arches:
     name: publicsuffix-list-dafsa
     evr: 20210518-3.el9
     sourcerpm: publicsuffix-list-20210518-3.el9.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/u/unzip-6.0-58.el9_5.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/u/unzip-6.0-60.el9.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 190785
-    checksum: sha256:009698f3b4432b9df219fd2f894234aad1cee8c4e4e61384b4e293ef8e28e9c2
+    size: 185941
+    checksum: sha256:6a83acc410c8640daf3f97cd978cc9400ca9caf600006fd1510622bfa9faaf23
     name: unzip
-    evr: 6.0-58.el9_5
-    sourcerpm: unzip-6.0-58.el9_5.src.rpm
+    evr: 6.0-60.el9
+    sourcerpm: unzip-6.0-60.el9.src.rpm
   source:
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/source/SRPMS/Packages/o/oniguruma-6.9.6-1.el9.5.src.rpm
     repoid: ubi-9-for-x86_64-appstream-source-rpms
@@ -141,12 +141,12 @@ arches:
     checksum: sha256:001c087565034e44df1a935bc4aabb44b7b47b3187752c8b18e44c3900f6fd67
     name: wget
     evr: 1.21.1-8.el9_4
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/j/jq-1.6-17.el9_6.2.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/j/jq-1.6-19.el9_8.2.src.rpm
     repoid: ubi-9-for-x86_64-baseos-source-rpms
-    size: 1505374
-    checksum: sha256:88870e90abd12a46ac6da90154b82e5f4f3f5fbf5fb9116160e85875436aa8fa
+    size: 1512470
+    checksum: sha256:abe953ef93fb49db17177190dc0698ab649f18a0bfaef4bb0ef0cd94644d1ec3
     name: jq
-    evr: 1.6-17.el9_6.2
+    evr: 1.6-19.el9_8.2
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/l/libpsl-0.21.1-5.el9.src.rpm
     repoid: ubi-9-for-x86_64-baseos-source-rpms
     size: 9160109
@@ -159,10 +159,10 @@ arches:
     checksum: sha256:3e2e87867d4d3967d0cd00d1a80812438e5b20eda61b620fe8b62084e528490b
     name: publicsuffix-list
     evr: 20210518-3.el9
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/u/unzip-6.0-58.el9_5.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/u/unzip-6.0-60.el9.src.rpm
     repoid: ubi-9-for-x86_64-baseos-source-rpms
-    size: 1436757
-    checksum: sha256:49de0234c5e8f588c94b435c35225bcccd4cc94bb19cac94110d9aa0c5060f69
+    size: 1436236
+    checksum: sha256:2f745809f67389b9cb4bc051a16a8e1b3049253632a0c34943695b2330717c48
     name: unzip
-    evr: 6.0-58.el9_5
+    evr: 6.0-60.el9
   module_metadata: []
