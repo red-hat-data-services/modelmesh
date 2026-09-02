@@ -11,13 +11,13 @@ arches:
     name: oniguruma
     evr: 6.9.6-1.el9.5
     sourcerpm: oniguruma-6.9.6-1.el9.5.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/appstream/os/Packages/w/wget-1.21.1-8.el9_4.aarch64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/appstream/os/Packages/w/wget-1.21.1-11.el9_8.aarch64.rpm
     repoid: ubi-9-for-aarch64-appstream-rpms
-    size: 801881
-    checksum: sha256:8d5014131be00c09deac0494ffe8ffd1e206d280aaabb7db98a7d043acda4aca
+    size: 803658
+    checksum: sha256:fc87cebd183a429b065a54384eccad18c2b786497262926406da13b1d7a1abe9
     name: wget
-    evr: 1.21.1-8.el9_4
-    sourcerpm: wget-1.21.1-8.el9_4.src.rpm
+    evr: 1.21.1-11.el9_8
+    sourcerpm: wget-1.21.1-11.el9_8.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/j/jq-1.6-19.el9_8.2.aarch64.rpm
     repoid: ubi-9-for-aarch64-baseos-rpms
     size: 191195
@@ -53,12 +53,12 @@ arches:
     checksum: sha256:cba17754ccaffd886995aec7f152aadbc5d9932a2a2cdf1d983291c7b2838404
     name: oniguruma
     evr: 6.9.6-1.el9.5
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/appstream/source/SRPMS/Packages/w/wget-1.21.1-8.el9_4.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/appstream/source/SRPMS/Packages/w/wget-1.21.1-11.el9_8.src.rpm
     repoid: ubi-9-for-aarch64-appstream-source-rpms
-    size: 4907486
-    checksum: sha256:001c087565034e44df1a935bc4aabb44b7b47b3187752c8b18e44c3900f6fd67
+    size: 4916557
+    checksum: sha256:f7c97c19a4d4941c94bd5340adc0642297157bcda2e57ec10799e1514d7c0268
     name: wget
-    evr: 1.21.1-8.el9_4
+    evr: 1.21.1-11.el9_8
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/j/jq-1.6-19.el9_8.2.src.rpm
     repoid: ubi-9-for-aarch64-baseos-source-rpms
     size: 1512470
@@ -93,13 +93,13 @@ arches:
     name: oniguruma
     evr: 6.9.6-1.el9.5
     sourcerpm: oniguruma-6.9.6-1.el9.5.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/w/wget-1.21.1-8.el9_4.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/os/Packages/w/wget-1.21.1-11.el9_8.x86_64.rpm
     repoid: ubi-9-for-x86_64-appstream-rpms
-    size: 807555
-    checksum: sha256:a5366a624f63487a0cfc5fc2fe15148d6c31be27c80cf00815f25324e3d0d729
+    size: 809606
+    checksum: sha256:42de6fc18dc14722a1793284c2f0692c4159837663168f1dd56925020c1f28f3
     name: wget
-    evr: 1.21.1-8.el9_4
-    sourcerpm: wget-1.21.1-8.el9_4.src.rpm
+    evr: 1.21.1-11.el9_8
+    sourcerpm: wget-1.21.1-11.el9_8.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/j/jq-1.6-19.el9_8.2.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
     size: 197453
@@ -135,12 +135,12 @@ arches:
     checksum: sha256:cba17754ccaffd886995aec7f152aadbc5d9932a2a2cdf1d983291c7b2838404
     name: oniguruma
     evr: 6.9.6-1.el9.5
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/source/SRPMS/Packages/w/wget-1.21.1-8.el9_4.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/appstream/source/SRPMS/Packages/w/wget-1.21.1-11.el9_8.src.rpm
     repoid: ubi-9-for-x86_64-appstream-source-rpms
-    size: 4907486
-    checksum: sha256:001c087565034e44df1a935bc4aabb44b7b47b3187752c8b18e44c3900f6fd67
+    size: 4916557
+    checksum: sha256:f7c97c19a4d4941c94bd5340adc0642297157bcda2e57ec10799e1514d7c0268
     name: wget
-    evr: 1.21.1-8.el9_4
+    evr: 1.21.1-11.el9_8
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/j/jq-1.6-19.el9_8.2.src.rpm
     repoid: ubi-9-for-x86_64-baseos-source-rpms
     size: 1512470
