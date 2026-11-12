@@ -18,13 +18,13 @@ arches:
     name: wget
     evr: 1.21.1-11.el9_8
     sourcerpm: wget-1.21.1-11.el9_8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/j/jq-1.6-19.el9_8.2.aarch64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/j/jq-1.6-21.el9_9.aarch64.rpm
     repoid: ubi-9-for-aarch64-baseos-rpms
-    size: 191195
-    checksum: sha256:633aaf3e87b19d4a591bd9f47cd81fde8ec49629d3f58932addfc8a134b7949d
+    size: 191163
+    checksum: sha256:170ca96c06f214a31b8f40faa89198680f70cc68a5f30c2980d40cb5c069ce37
     name: jq
-    evr: 1.6-19.el9_8.2
-    sourcerpm: jq-1.6-19.el9_8.2.src.rpm
+    evr: 1.6-21.el9_9
+    sourcerpm: jq-1.6-21.el9_9.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.aarch64.rpm
     repoid: ubi-9-for-aarch64-baseos-rpms
     size: 67300
@@ -59,12 +59,12 @@ arches:
     checksum: sha256:f7c97c19a4d4941c94bd5340adc0642297157bcda2e57ec10799e1514d7c0268
     name: wget
     evr: 1.21.1-11.el9_8
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/j/jq-1.6-19.el9_8.2.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/j/jq-1.6-21.el9_9.src.rpm
     repoid: ubi-9-for-aarch64-baseos-source-rpms
-    size: 1512470
-    checksum: sha256:abe953ef93fb49db17177190dc0698ab649f18a0bfaef4bb0ef0cd94644d1ec3
+    size: 1512457
+    checksum: sha256:08ccbf4c45f04e3062a25f6aa06c0591efeb795f6fc967e1374480c886a6466f
     name: jq
-    evr: 1.6-19.el9_8.2
+    evr: 1.6-21.el9_9
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/aarch64/baseos/source/SRPMS/Packages/l/libpsl-0.21.1-5.el9.src.rpm
     repoid: ubi-9-for-aarch64-baseos-source-rpms
     size: 9160109
@@ -100,13 +100,13 @@ arches:
     name: wget
     evr: 1.21.1-11.el9_8
     sourcerpm: wget-1.21.1-11.el9_8.src.rpm
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/j/jq-1.6-19.el9_8.2.x86_64.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/j/jq-1.6-21.el9_9.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
-    size: 197453
-    checksum: sha256:9793a39a4746a09ba89c3d9ccc70150ac6c878286deee26d7e3aabede4666417
+    size: 197415
+    checksum: sha256:bbf3a251f6bae8fe8d73e6e4136ffac09dedbc24c2354c8f869d5d6576024f3f
     name: jq
-    evr: 1.6-19.el9_8.2
-    sourcerpm: jq-1.6-19.el9_8.2.src.rpm
+    evr: 1.6-21.el9_9
+    sourcerpm: jq-1.6-21.el9_9.src.rpm
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/os/Packages/l/libpsl-0.21.1-5.el9.x86_64.rpm
     repoid: ubi-9-for-x86_64-baseos-rpms
     size: 67454
@@ -141,12 +141,12 @@ arches:
     checksum: sha256:f7c97c19a4d4941c94bd5340adc0642297157bcda2e57ec10799e1514d7c0268
     name: wget
     evr: 1.21.1-11.el9_8
-  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/j/jq-1.6-19.el9_8.2.src.rpm
+  - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/j/jq-1.6-21.el9_9.src.rpm
     repoid: ubi-9-for-x86_64-baseos-source-rpms
-    size: 1512470
-    checksum: sha256:abe953ef93fb49db17177190dc0698ab649f18a0bfaef4bb0ef0cd94644d1ec3
+    size: 1512457
+    checksum: sha256:08ccbf4c45f04e3062a25f6aa06c0591efeb795f6fc967e1374480c886a6466f
     name: jq
-    evr: 1.6-19.el9_8.2
+    evr: 1.6-21.el9_9
   - url: https://cdn-ubi.redhat.com/content/public/ubi/dist/ubi9/9/x86_64/baseos/source/SRPMS/Packages/l/libpsl-0.21.1-5.el9.src.rpm
     repoid: ubi-9-for-x86_64-baseos-source-rpms
     size: 9160109
